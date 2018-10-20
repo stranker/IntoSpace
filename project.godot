@@ -11,8 +11,20 @@ config_version=3
 [application]
 
 config/name="IntoSpace"
+run/main_scene="res://Objects/Spaceship.tscn"
 config/icon="res://icon.png"
+
+[display]
+
+window/size/width=720
+window/size/height=1280
+window/size/always_on_top=true
+window/handheld/orientation="portrait"
+window/handheld/emulate_touchscreen=true
+window/stretch/mode="2d"
+window/stretch/aspect="keep_width"
 
 [rendering]
 
+environment/default_clear_color=Color( 0.178223, 0, 0.3125, 1 )
 environment/default_environment="res://default_env.tres"
