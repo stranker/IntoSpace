@@ -21,6 +21,13 @@ func _process(delta):
 func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()
 	pass # replace with function body
+
+
+func _on_Bullet_area_entered(area):
+	if area.is_in_group(\"Enemy\") and area.is_alive():
+		area.take_damage()
+		queue_free()
+	pass # replace with function body
 "
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -28,7 +35,7 @@ func _on_VisibilityNotifier2D_screen_exited():
 custom_solver_bias = 0.0
 extents = Vector2( 6.28635, 16.3079 )
 
-[node name="Bullet" type="Area2D" index="0"]
+[node name="Bullet" type="Area2D"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -52,6 +59,8 @@ shape = SubResource( 2 )
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="." index="2"]
 
 rect = Rect2( -10, -10, 20, 20 )
+
+[connection signal="area_entered" from="." to="." method="_on_Bullet_area_entered"]
 
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 

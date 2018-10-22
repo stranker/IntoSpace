@@ -12,16 +12,13 @@ position = Vector2( 374.571, 1131.51 )
 [node name="Spawner" parent="." index="1" instance=ExtResource( 2 )]
 
 position = Vector2( 112.363, -91.2949 )
-timeSpawn = 2.0
 
 [node name="Spawner2" parent="." index="2" instance=ExtResource( 2 )]
 
 position = Vector2( 407.316, -273.885 )
-timeSpawn = 3.0
 
 [node name="Spawner3" parent="." index="3" instance=ExtResource( 2 )]
 
 position = Vector2( 610.973, -119.386 )
-timeSpawn = 2.6
 
 
