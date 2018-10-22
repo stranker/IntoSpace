@@ -11,14 +11,18 @@ config_version=3
 [application]
 
 config/name="IntoSpace"
-run/main_scene="res://Objects/Spaceship.tscn"
+run/main_scene="res://Objects/GameScene.tscn"
+run/disable_stderr=true
 config/icon="res://icon.png"
+
+[debug]
+
+settings/stdout/verbose_stdout=true
 
 [display]
 
 window/size/width=720
 window/size/height=1280
-window/size/always_on_top=true
 window/handheld/orientation="portrait"
 window/handheld/emulate_touchscreen=true
 window/stretch/mode="2d"
