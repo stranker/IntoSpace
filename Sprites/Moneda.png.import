@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Spacehip.png-8bb0d9b97573ab33fe556b2c668b811f.stex"
+path="res://.import/Moneda.png-0b693864bb9ccd9b4e994f3c10d3040d.stex"
 
 [deps]
 
-source_file="res://Sprites/Spacehip.png"
-dest_files=[ "res://.import/Spacehip.png-8bb0d9b97573ab33fe556b2c668b811f.stex" ]
+source_file="res://Sprites/Moneda.png"
+dest_files=[ "res://.import/Moneda.png-0b693864bb9ccd9b4e994f3c10d3040d.stex" ]
 
 [params]
 

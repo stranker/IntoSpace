@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Spacehip.png-8bb0d9b97573ab33fe556b2c668b811f.stex"
+path="res://.import/Smoke.png-5692449a3d406e5c061bff54037cb28a.stex"
 
 [deps]
 
-source_file="res://Sprites/Spacehip.png"
-dest_files=[ "res://.import/Spacehip.png-8bb0d9b97573ab33fe556b2c668b811f.stex" ]
+source_file="res://Sprites/Smoke.png"
+dest_files=[ "res://.import/Smoke.png-5692449a3d406e5c061bff54037cb28a.stex" ]
 
 [params]
 
