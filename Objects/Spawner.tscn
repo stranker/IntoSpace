@@ -22,7 +22,7 @@ func _on_Timer_timeout():
 "
 _sections_unfolded = [ "Resource" ]
 
-[node name="AsteroidSpawner" type="Position2D" index="0"]
+[node name="AsteroidSpawner" type="Position2D"]
 
 script = SubResource( 1 )
 asteroide = ExtResource( 1 )
