@@ -1,5 +1,105 @@
-[gd_scene format=2]
+[gd_scene load_steps=3 format=2]
 
-[node name="ClusterMonedas" type="Node2D" index="0"]
+[ext_resource path="res://Objects/Moneda.tscn" type="PackedScene" id=1]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Node2D
+
+onready var clusterList = get_children()
+
+func _ready():
+	activate_random_cluster()
+	pass
+
+func activate_random_cluster():
+	randomize()
+	var randomCluster = rand_range(0,clusterList.size())
+	get_child(randomCluster).show()
+	pass
+"
+
+[node name="ClusterMonedas" type="Node2D"]
+
+script = SubResource( 1 )
+
+[node name="Cluster1" type="Node2D" parent="." index="0"]
+
+editor/display_folded = true
+visible = false
+
+[node name="Moneda" parent="Cluster1" index="0" instance=ExtResource( 1 )]
+
+position = Vector2( 0, 30 )
+
+[node name="Moneda2" parent="Cluster1" index="1" instance=ExtResource( 1 )]
+
+position = Vector2( -30, 0 )
+
+[node name="Moneda3" parent="Cluster1" index="2" instance=ExtResource( 1 )]
+
+position = Vector2( 0, -30 )
+
+[node name="Moneda4" parent="Cluster1" index="3" instance=ExtResource( 1 )]
+
+position = Vector2( 30, 0 )
+
+[node name="Cluster2" type="Node2D" parent="." index="1"]
+
+editor/display_folded = true
+visible = false
+
+[node name="Moneda" parent="Cluster2" index="0" instance=ExtResource( 1 )]
+
+position = Vector2( 2, 42 )
+
+[node name="Moneda6" parent="Cluster2" index="1" instance=ExtResource( 1 )]
+
+position = Vector2( -58, 42 )
+
+[node name="Moneda5" parent="Cluster2" index="2" instance=ExtResource( 1 )]
+
+position = Vector2( 32, 2 )
+
+[node name="Moneda2" parent="Cluster2" index="3" instance=ExtResource( 1 )]
+
+position = Vector2( -28, 2 )
+
+[node name="Moneda3" parent="Cluster2" index="4" instance=ExtResource( 1 )]
+
+position = Vector2( 2, -38 )
+
+[node name="Moneda4" parent="Cluster2" index="5" instance=ExtResource( 1 )]
+
+position = Vector2( 62, 42 )
+
+[node name="Cluster3" type="Node2D" parent="." index="2"]
+
+editor/display_folded = true
+visible = false
+
+[node name="Moneda" parent="Cluster3" index="0" instance=ExtResource( 1 )]
+
+position = Vector2( 0, 40 )
+
+[node name="Moneda6" parent="Cluster3" index="1" instance=ExtResource( 1 )]
+
+position = Vector2( -60, -40 )
+
+[node name="Moneda5" parent="Cluster3" index="2" instance=ExtResource( 1 )]
+
+position = Vector2( 30, 0 )
+
+[node name="Moneda2" parent="Cluster3" index="3" instance=ExtResource( 1 )]
+
+position = Vector2( -30, 0 )
+
+[node name="Moneda3" parent="Cluster3" index="4" instance=ExtResource( 1 )]
+
+position = Vector2( 0, -40 )
+
+[node name="Moneda4" parent="Cluster3" index="5" instance=ExtResource( 1 )]
+
+position = Vector2( 60, -40 )
 
 

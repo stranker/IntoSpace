@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Objects/ClusterMonedas.tscn" type="PackedScene" id=1]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Position2D
+
+export (PackedScene) var clusterMonedas
+export (float) var spawnTime
+
+func _ready():
+	$Timer.wait_time = spawnTime
+	pass
+
+func _on_Timer_timeout():
+	var cm = clusterMonedas.instance()
+	get_tree().root.call_deferred(\"add_child\",cm)
+	cm.global_position = global_position
+	pass # replace with function body
+"
+
+[node name="SpawnerClusterMonedas" type="Position2D"]
+
+script = SubResource( 1 )
+clusterMonedas = ExtResource( 1 )
+spawnTime = 3.0
+
+[node name="Timer" type="Timer" parent="." index="0"]
+
+process_mode = 1
+wait_time = 3.0
+one_shot = false
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+
+
