@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Objects/Moneda.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Objects/Interactables/Moneda.tscn" type="PackedScene" id=1]
 
 [sub_resource type="GDScript" id=1]
 
@@ -8,15 +8,27 @@ resource_name = "ClusterMonedas.gd"
 script/source = "extends Node2D
 
 onready var clusterList = get_children()
+var timer = 0
+var deathTime = 7
+var cluster
 
 func _ready():
 	activate_random_cluster()
 	pass
 
+func _process(delta):
+	timer += delta
+	if timer > deathTime:
+		queue_free()
+
 func activate_random_cluster():
 	randomize()
 	var randomCluster = rand_range(0,clusterList.size())
-	get_child(randomCluster).show()
+	cluster = get_children()[randomCluster]
+	cluster.show()
+	for i in get_children():
+		if i != cluster:
+			i.queue_free()
 	pass
 
 
@@ -109,11 +121,5 @@ position = Vector2( 0, -40 )
 [node name="Moneda4" parent="Cluster3" index="5" instance=ExtResource( 1 )]
 
 position = Vector2( 60, -40 )
-
-[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="." index="3"]
-
-rect = Rect2( -10, -10, 20, 20 )
-
-[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 
 

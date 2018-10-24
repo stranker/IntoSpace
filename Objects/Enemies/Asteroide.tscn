@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Sprites/Asteroide.png" type="Texture" id=1]
 [ext_resource path="res://Sprites/Smoke.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/big_circle.png" type="Texture" id=3]
 
 [sub_resource type="GDScript" id=1]
 
@@ -9,7 +10,7 @@ resource_name = "Asteroide.gd"
 script/source = "extends Area2D
 
 var direction = Vector2(0,1)
-var speed = 100
+var speed = 50
 var life = 2
 var alive = true
 var initialRotation
@@ -23,7 +24,7 @@ func _ready():
 func _process(delta):
 	if alive:
 		translate(direction * delta * speed)
-		rotation += initialRotation * delta
+		$Sprite.rotation += initialRotation * delta
 	pass
 
 func take_damage():
@@ -104,16 +105,16 @@ length = 0.2
 loop = false
 step = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/path = NodePath("Flick:enabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.386706 ), Color( 1, 1, 1, 1 ) ]
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
 }
 
 [sub_resource type="Curve" id=5]
@@ -161,17 +162,17 @@ emission_shape = 0
 flag_align_y = false
 flag_rotate_y = false
 flag_disable_z = true
-spread = 180.0
+spread = 20.0
 flatness = 0.0
-gravity = Vector3( 0, -180, 0 )
-initial_velocity = 50.0
+gravity = Vector3( 0, -50, 0 )
+initial_velocity = 500.0
 initial_velocity_random = 0.5
 angular_velocity = 0.0
 angular_velocity_random = 0.0
 angular_velocity_curve = SubResource( 6 )
 orbit_velocity = 0.0
-orbit_velocity_random = 1.0
-linear_accel = 50.0
+orbit_velocity_random = 0.0
+linear_accel = 100.0
 linear_accel_random = 0.0
 radial_accel = 0.0
 radial_accel_random = 0.0
@@ -192,6 +193,7 @@ anim_speed_random = 0.0
 anim_offset = 0.0
 anim_offset_random = 0.0
 anim_loop = false
+_sections_unfolded = [ "Emission Shape", "Gravity", "Spread" ]
 
 [node name="Asteroide" type="Area2D"]
 
@@ -227,14 +229,16 @@ blend_times = [  ]
 
 [node name="Explosion" type="Particles2D" parent="." index="3"]
 
+position = Vector2( 0, 35.6043 )
+rotation = -1.56376
 emitting = false
-amount = 20
+amount = 30
 lifetime = 0.8
 one_shot = true
 preprocess = 0.0
 speed_scale = 1.0
 explosiveness = 0.8
-randomness = 0.2
+randomness = 0.0
 fixed_fps = 0
 fract_delta = true
 visibility_rect = Rect2( -100, -100, 200, 200 )
@@ -253,6 +257,30 @@ process_mode = 1
 wait_time = 8.0
 one_shot = false
 autostart = true
+
+[node name="Flick" type="Light2D" parent="." index="5"]
+
+enabled = false
+editor_only = false
+texture = ExtResource( 3 )
+offset = Vector2( 0, 0 )
+texture_scale = 1.0
+color = Color( 1, 1, 1, 1 )
+energy = 5.0
+mode = 0
+range_height = 0.0
+range_z_min = -1024
+range_z_max = 1024
+range_layer_min = 0
+range_layer_max = 0
+range_item_cull_mask = 1
+shadow_enabled = false
+shadow_color = Color( 0, 0, 0, 0 )
+shadow_buffer_size = 2048
+shadow_gradient_length = 0.0
+shadow_filter = 0
+shadow_filter_smooth = 0.0
+shadow_item_cull_mask = 1
 
 [connection signal="timeout" from="AliveTimer" to="." method="_on_AliveTimer_timeout"]
 
