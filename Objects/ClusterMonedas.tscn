@@ -4,6 +4,7 @@
 
 [sub_resource type="GDScript" id=1]
 
+resource_name = "ClusterMonedas.gd"
 script/source = "extends Node2D
 
 onready var clusterList = get_children()
@@ -17,7 +18,14 @@ func activate_random_cluster():
 	var randomCluster = rand_range(0,clusterList.size())
 	get_child(randomCluster).show()
 	pass
+
+
+func _on_VisibilityNotifier2D_screen_exited():
+	if global_position.y > get_viewport_rect().size.y:
+		queue_free()
+	pass # replace with function body
 "
+_sections_unfolded = [ "Resource" ]
 
 [node name="ClusterMonedas" type="Node2D"]
 
@@ -101,5 +109,11 @@ position = Vector2( 0, -40 )
 [node name="Moneda4" parent="Cluster3" index="5" instance=ExtResource( 1 )]
 
 position = Vector2( 60, -40 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="." index="3"]
+
+rect = Rect2( -10, -10, 20, 20 )
+
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 
 

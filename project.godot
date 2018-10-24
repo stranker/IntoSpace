@@ -15,6 +15,10 @@ run/main_scene="res://Objects/GameScene.tscn"
 run/disable_stderr=true
 config/icon="res://icon.png"
 
+[autoload]
+
+Global="*res://Scripts/Global.gd"
+
 [debug]
 
 settings/stdout/verbose_stdout=true
@@ -30,5 +34,6 @@ window/stretch/aspect="keep_width"
 
 [rendering]
 
+quality/2d/use_pixel_snap=true
 environment/default_clear_color=Color( 0.178223, 0, 0.3125, 1 )
 environment/default_environment="res://default_env.tres"

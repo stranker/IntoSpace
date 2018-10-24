@@ -9,17 +9,21 @@ resource_name = "Asteroide.gd"
 script/source = "extends Area2D
 
 var direction = Vector2(0,1)
-var speed = 400
+var speed = 100
 var life = 2
 var alive = true
+var initialRotation
 
 func _ready():
 	add_to_group(\"Enemy\")
+	calculate_direction()
+	initialRotation = rand_range(-1,1)
 	pass
 
 func _process(delta):
 	if alive:
 		translate(direction * delta * speed)
+		rotation += initialRotation * delta
 	pass
 
 func take_damage():
@@ -32,7 +36,16 @@ func take_damage():
 	pass
 
 func is_alive():
-	return alive"
+	return alive
+
+func calculate_direction():
+	direction.x = rand_range(-0.5,0.5)
+	pass
+
+func _on_AliveTimer_timeout():
+	queue_free()
+	pass # replace with function body
+"
 _sections_unfolded = [ "Resource" ]
 
 [sub_resource type="CircleShape2D" id=2]
@@ -180,7 +193,7 @@ anim_offset = 0.0
 anim_offset_random = 0.0
 anim_loop = false
 
-[node name="Asteroide" type="Area2D" index="0"]
+[node name="Asteroide" type="Area2D"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -233,5 +246,14 @@ normal_map = null
 h_frames = 1
 v_frames = 1
 _sections_unfolded = [ "Process Material", "Textures", "Time" ]
+
+[node name="AliveTimer" type="Timer" parent="." index="4"]
+
+process_mode = 1
+wait_time = 8.0
+one_shot = false
+autostart = true
+
+[connection signal="timeout" from="AliveTimer" to="." method="_on_AliveTimer_timeout"]
 
 
