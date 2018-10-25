@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Objects/Player/Spaceship.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/Background1.png" type="Texture" id=2]
 [ext_resource path="res://Objects/UI/UIPanel.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Objects/Misc/CoinLabel.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Objects/Interactables/Camara.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Objects/Interactables/Camara.tscn" type="PackedScene" id=4]
 
 [node name="GameScene" type="Node2D"]
 
@@ -56,13 +55,7 @@ _sections_unfolded = [ "Offset" ]
 
 [node name="UIPanel" parent="." index="2" instance=ExtResource( 3 )]
 
-editor/display_folded = true
-
-[node name="CoinLabel" parent="UIPanel/CoinLayer" index="0" instance=ExtResource( 4 )]
-
-position = Vector2( 315.08, 243.16 )
-
-[node name="Camara" parent="." index="3" instance=ExtResource( 5 )]
+[node name="Camara" parent="." index="3" instance=ExtResource( 4 )]
 
 position = Vector2( 361.123, 636.903 )
 

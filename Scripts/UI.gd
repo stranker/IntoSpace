@@ -2,13 +2,11 @@ extends CanvasLayer
 
 var meters = 0
 var coins = 0
-var coinLayer
 
 func _ready():
 	Global.UI = self
 	$Panel/Coins.text = str(Global.coins)
 	$Panel/Meters.text = str(Global.player.get_meters()) + "m"
-	coinLayer = $CoinLayer
 	pass
 
 func _process(delta):
