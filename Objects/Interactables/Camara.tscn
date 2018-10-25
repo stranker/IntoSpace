@@ -8,16 +8,37 @@
 resource_name = "Camera.gd"
 script/source = "extends Camera2D
 
+var cameraSpeed = 500
+var direction = Vector2(0,-1)
+var shaking = false
+var shakeAmount = 0
+
 func _ready():
 	Global.camera = self
 	pass
 
 func _process(delta):
+	translate(direction * cameraSpeed * delta)
+	if shaking:
+		offset.x = rand_range(-shakeAmount,shakeAmount)
+		offset.y = rand_range(-shakeAmount,shakeAmount)
+	pass
+
+func shake(amount, time):
+	shaking = true
+	$ShakeTime.wait_time = time
+	shakeAmount = amount
+	$ShakeTime.start()
 	pass
 
 func minimal_shake():
-	$Anim.play(\"MinimalShake\")
-	pass"
+	shake(2,0.5)
+	pass
+
+func _on_ShakeTime_timeout():
+	shaking = false
+	pass # replace with function body
+"
 _sections_unfolded = [ "Resource" ]
 
 [sub_resource type="Animation" id=2]
@@ -36,13 +57,12 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 2, 3 ), Vector2( 1, -2 ), Vector2( -1, 0 ), Vector2( 3, 1 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( 2, 3 ), Vector2( -5, 5 ), Vector2( 10, -10 ), Vector2( 3, 1 ) ]
 }
 
 [node name="Camara" type="Camera2D"]
 
 position = Vector2( -2.40921, 0.722412 )
-offset = Vector2( 3, 1 )
 anchor_mode = 1
 rotating = false
 current = true
@@ -86,5 +106,14 @@ blend_times = [  ]
 [node name="SpawnerClusterMonedas" parent="." index="2" instance=ExtResource( 2 )]
 
 position = Vector2( 2.3884, -659.393 )
+
+[node name="ShakeTime" type="Timer" parent="." index="3"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = true
+autostart = false
+
+[connection signal="timeout" from="ShakeTime" to="." method="_on_ShakeTime_timeout"]
 
 

@@ -249,7 +249,7 @@ rect = Rect2( -10, -10, 20, 20 )
 [node name="Trail" type="Particles2D" parent="." index="3"]
 
 show_behind_parent = true
-position = Vector2( -0.247902, 23.7724 )
+position = Vector2( -0.247902, 19.89 )
 rotation = 1.5708
 emitting = true
 amount = 10
@@ -263,13 +263,13 @@ fixed_fps = 0
 fract_delta = true
 visibility_rect = Rect2( -100, -100, 200, 200 )
 local_coords = true
-draw_order = 0
+draw_order = 1
 process_material = SubResource( 7 )
 texture = ExtResource( 2 )
 normal_map = null
 h_frames = 1
 v_frames = 1
-_sections_unfolded = [ "Process Material", "Textures", "Time", "Transform", "Visibility" ]
+_sections_unfolded = [ "Drawing", "Process Material", "Textures", "Time", "Transform", "Visibility" ]
 
 [node name="Impact" type="Particles2D" parent="." index="4"]
 
@@ -284,14 +284,14 @@ randomness = 0.0
 fixed_fps = 0
 fract_delta = true
 visibility_rect = Rect2( -100, -100, 200, 200 )
-local_coords = true
+local_coords = false
 draw_order = 0
 process_material = SubResource( 10 )
 texture = ExtResource( 2 )
 normal_map = null
 h_frames = 1
 v_frames = 1
-_sections_unfolded = [ "Process Material", "Textures", "Time", "Transform" ]
+_sections_unfolded = [ "Drawing", "Process Material", "Textures", "Time", "Transform" ]
 
 [node name="Anim" type="AnimationPlayer" parent="." index="5"]
 

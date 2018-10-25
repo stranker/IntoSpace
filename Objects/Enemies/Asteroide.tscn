@@ -10,8 +10,8 @@ resource_name = "Asteroide.gd"
 script/source = "extends Area2D
 
 var direction = Vector2(0,1)
-var speed = 50
-var life = 2
+var speed = 25
+var life = 3
 var alive = true
 var initialRotation
 
@@ -34,6 +34,7 @@ func take_damage():
 		if life <= 0:
 			alive = false
 			$AnimSprite.play(\"Dead\")
+			Global.camera.minimal_shake()
 	pass
 
 func is_alive():
@@ -98,6 +99,18 @@ tracks/2/keys = {
 "method": "queue_free"
 } ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("Flick:enabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=4]
 
@@ -133,7 +146,7 @@ curve = SubResource( 5 )
 [sub_resource type="Gradient" id=7]
 
 offsets = PoolRealArray( 0, 1 )
-colors = PoolColorArray( 1, 1, 1, 0.497255, 1, 1, 1, 0 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
 
 [sub_resource type="GradientTexture" id=8]
 
@@ -193,7 +206,7 @@ anim_speed_random = 0.0
 anim_offset = 0.0
 anim_offset_random = 0.0
 anim_loop = false
-_sections_unfolded = [ "Emission Shape", "Gravity", "Spread" ]
+_sections_unfolded = [ "Color", "Emission Shape", "Gravity", "Spread" ]
 
 [node name="Asteroide" type="Area2D"]
 
