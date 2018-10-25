@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/MagnetArea.png-975e10e5f5c5f0a0c3fc58d0b235ae4e.stex"
+path="res://.import/Shield.png-a2559542311b2c8401d0290c87e5661b.stex"
 
 [deps]
 
-source_file="res://Sprites/MagnetArea.png"
-dest_files=[ "res://.import/MagnetArea.png-975e10e5f5c5f0a0c3fc58d0b235ae4e.stex" ]
+source_file="res://Sprites/Shield.png"
+dest_files=[ "res://.import/Shield.png-a2559542311b2c8401d0290c87e5661b.stex" ]
 
 [params]
 

@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Objects/Interactables/Bullet.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/Spacehip.png" type="Texture" id=2]
 [ext_resource path="res://Objects/Powers/MagnetArea.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Objects/Powers/Shield.tscn" type="PackedScene" id=4]
 
 [sub_resource type="GDScript" id=1]
 
@@ -16,17 +17,19 @@ var canShoot = true
 var moving = false
 var sizeSprite
 var dragging = false
-var damage = 2
+export (int) var damage = 1
+export (float) var fireRate = 0.4
 
 func _ready():
 	sizeSprite = $Sprite.texture.get_size() * $Sprite.scale
 	Global.player = self
+	$ShootTimer.wait_time = fireRate
 	add_to_group(\"Player\")
 	pass
 
 func _process(delta):
 	movement(delta)
-	shoot()
+	#shoot()
 	clamp_position()
 	if !dragging:
 		offsetPos = Vector2()
@@ -66,7 +69,28 @@ func shoot():
 		b.global_position = $ShootPos.global_position
 		b.set_damage(damage)
 		canShoot = false
-		$ShootTimer.start()"
+		$ShootTimer.start()
+
+func increment_damage():
+	damage += 1
+	pass
+
+func increment_firerate():
+	fireRate -= 0.05
+	if fireRate <= 0.1:
+		fireRate = 0.1
+	$ShootTimer.wait_time = fireRate
+	pass
+
+func add_shield():
+	
+	pass
+
+func add_hover_missile():
+	pass
+
+func add_laser():
+	pass"
 _sections_unfolded = [ "Resource" ]
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -87,6 +111,8 @@ audio_bus_name = "Master"
 script = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 bullet = ExtResource( 1 )
+damage = 1
+fireRate = 0.4
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
@@ -116,6 +142,10 @@ autostart = false
 [node name="MagnetArea" parent="." index="4" instance=ExtResource( 3 )]
 
 position = Vector2( 0.291962, 7.59167 )
+
+[node name="Shield" parent="." index="5" instance=ExtResource( 4 )]
+
+position = Vector2( -0.429291, 5.79529 )
 
 [connection signal="timeout" from="ShootTimer" to="." method="_on_ShootTimer_timeout"]
 

@@ -10,6 +10,8 @@
 [node name="SpaceShip" parent="." index="0" instance=ExtResource( 1 )]
 
 position = Vector2( 334.39, 1051.15 )
+damage = 1
+fireRate = 0.4
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." index="1"]
 
