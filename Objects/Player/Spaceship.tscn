@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Objects/Interactables/Bullet.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/Spacehip.png" type="Texture" id=2]
+[ext_resource path="res://Objects/Powers/MagnetArea.tscn" type="PackedScene" id=3]
 
 [sub_resource type="GDScript" id=1]
 
@@ -14,8 +15,8 @@ export (PackedScene) var bullet
 var canShoot = true
 var moving = false
 var sizeSprite
-var meters = 0
 var dragging = false
+var damage = 2
 
 func _ready():
 	sizeSprite = $Sprite.texture.get_size() * $Sprite.scale
@@ -25,7 +26,6 @@ func _ready():
 
 func _process(delta):
 	movement(delta)
-	count_meters(delta)
 	shoot()
 	clamp_position()
 	if !dragging:
@@ -47,16 +47,9 @@ func movement(delta):
 	position += offsetPos
 	pass
 
-func count_meters(delta):
-	meters += delta * 2
-	pass
-
 func _on_ShootTimer_timeout():
 	canShoot = true
 	pass # replace with function body
-
-func get_meters():
-	return meters
 
 func clamp_position():
 	if position.x < sizeSprite.x/2:
@@ -71,6 +64,7 @@ func shoot():
 		var b = bullet.instance()
 		get_tree().root.add_child(b)
 		b.global_position = $ShootPos.global_position
+		b.set_damage(damage)
 		canShoot = false
 		$ShootTimer.start()"
 _sections_unfolded = [ "Resource" ]
@@ -118,6 +112,10 @@ process_mode = 1
 wait_time = 0.4
 one_shot = true
 autostart = false
+
+[node name="MagnetArea" parent="." index="4" instance=ExtResource( 3 )]
+
+position = Vector2( 0.291962, 7.59167 )
 
 [connection signal="timeout" from="ShootTimer" to="." method="_on_ShootTimer_timeout"]
 

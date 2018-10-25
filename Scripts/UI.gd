@@ -1,12 +1,12 @@
 extends CanvasLayer
 
-var meters = 0
+var points = 0
 var coins = 0
 
 func _ready():
 	Global.UI = self
 	$Panel/Coins.text = str(Global.coins)
-	$Panel/Meters.text = str(Global.player.get_meters()) + "m"
+	$Panel/Points.text = str(Global.points)
 	pass
 
 func _process(delta):
@@ -14,9 +14,11 @@ func _process(delta):
 	pass
 
 func update_labels():
-	if meters != Global.player.get_meters():
-		meters = Global.player.get_meters()
-		$Panel/Meters.text = str(int(meters)) + "m"
+	if points != Global.points:
+		$Panel/Points/Chimi.text = "+" + str(Global.points - points)
+		$Panel/Points/Anim.play("Popup")
+		points = Global.points
+		$Panel/Points.text = str(int(points))
 	if coins != Global.coins:
 		coins = Global.coins
 		$Panel/Coins.text = str(coins)

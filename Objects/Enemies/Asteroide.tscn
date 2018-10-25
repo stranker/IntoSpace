@@ -14,6 +14,7 @@ var speed = 25
 var life = 3
 var alive = true
 var initialRotation
+var points = 100
 
 func _ready():
 	add_to_group(\"Enemy\")
@@ -27,14 +28,15 @@ func _process(delta):
 		$Sprite.rotation += initialRotation * delta
 	pass
 
-func take_damage():
+func take_damage(damage):
 	if alive:
-		life -= 1
+		life -= damage
 		$AnimSprite.play(\"Flick\")
 		if life <= 0:
 			alive = false
 			$AnimSprite.play(\"Dead\")
 			Global.camera.minimal_shake()
+			Global.points += points
 	pass
 
 func is_alive():

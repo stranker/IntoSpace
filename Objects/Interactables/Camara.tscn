@@ -90,10 +90,20 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="AsteroidSpawner" parent="." index="0" instance=ExtResource( 1 )]
 
-position = Vector2( 1.96002, -681.687 )
+position = Vector2( -243.736, -698.268 )
 timeSpawn = 2.0
 
-[node name="Anim" type="AnimationPlayer" parent="." index="1"]
+[node name="AsteroidSpawner2" parent="." index="1" instance=ExtResource( 1 )]
+
+position = Vector2( 225.046, -702.79 )
+timeSpawn = 2.0
+
+[node name="AsteroidSpawner3" parent="." index="2" instance=ExtResource( 1 )]
+
+position = Vector2( 199.422, -790.216 )
+timeSpawn = 2.0
+
+[node name="Anim" type="AnimationPlayer" parent="." index="3"]
 
 root_node = NodePath("..")
 autoplay = ""
@@ -103,11 +113,11 @@ playback_speed = 1.0
 anims/MinimalShake = SubResource( 2 )
 blend_times = [  ]
 
-[node name="SpawnerClusterMonedas" parent="." index="2" instance=ExtResource( 2 )]
+[node name="SpawnerClusterMonedas" parent="." index="4" instance=ExtResource( 2 )]
 
 position = Vector2( 2.3884, -659.393 )
 
-[node name="ShakeTime" type="Timer" parent="." index="3"]
+[node name="ShakeTime" type="Timer" parent="." index="5"]
 
 process_mode = 1
 wait_time = 1.0

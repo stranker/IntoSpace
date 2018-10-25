@@ -8,13 +8,23 @@ resource_name = "Moneda.gd"
 script/source = "extends Area2D
 
 var taken = false
+var magneticArea = null
+var speed = 200
 
 func _ready():
 	$Anim.advance(rand_range(0,$Anim.current_animation_length))
 	pass
 
+func _process(delta):
+	if magneticArea:
+		var direction = (magneticArea.global_position - global_position).normalized()
+		translate(direction * speed * delta)
+	pass
+
 func _on_Moneda_area_entered(area):
-	if area.is_in_group(\"Player\") and !taken:
+	if area.is_in_group(\"MagneticArea\"):
+		magneticArea = area
+	elif area.is_in_group(\"Player\") and !taken:
 		taken = true
 		Global.coins +=1
 		$Anim.play(\"Take\")
@@ -31,7 +41,7 @@ _sections_unfolded = [ "Resource" ]
 [sub_resource type="CircleShape2D" id=2]
 
 custom_solver_bias = 0.0
-radius = 17.4655
+radius = 22.9328
 
 [sub_resource type="Animation" id=3]
 

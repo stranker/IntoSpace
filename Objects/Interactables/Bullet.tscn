@@ -11,6 +11,7 @@ script/source = "extends Area2D
 export (int) var speed = 1300
 var movement = Vector2(0,-1)
 var active = true
+var damage
 
 func _ready():
 	add_to_group(\"Bullet\")
@@ -21,6 +22,8 @@ func _process(delta):
 		translate(speed * delta * movement)
 	pass
 
+func set_damage(val):
+	damage = val
 
 func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()
@@ -29,7 +32,7 @@ func _on_VisibilityNotifier2D_screen_exited():
 
 func _on_Bullet_area_entered(area):
 	if area.is_in_group(\"Enemy\") and area.is_alive() and active:
-		area.take_damage()
+		area.take_damage(damage)
 		bullet_impact(area)
 	pass # replace with function body
 
