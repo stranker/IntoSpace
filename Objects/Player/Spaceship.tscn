@@ -16,7 +16,6 @@ script/source = "extends Area2D
 var direction = Vector2(0,-1)
 var offsetPos = Vector2()
 export (PackedScene) var bullet
-var shootController = false
 var moving = false
 var sizeSprite
 var dragging = false
@@ -27,7 +26,7 @@ func _ready():
 	sizeSprite = $Sprite.texture.get_size() * $Sprite.scale
 	Global.player = self
 	add_to_group(\"Player\")
-	set_shoot_controller(shootController)
+	$Laser.enabled = false
 	pass
 
 func _process(delta):
@@ -80,21 +79,32 @@ func add_shield():
 	$Shield.create_shield()
 	pass
 
-func add_homing_missile():
-	$HomingShooter.enabled = true
+func homing_missile():
+	if !$HomingShooter.enabled:
+		$HomingShooter.enabled = true
+	else:
+		$HomingShooter.enabled = false
 	pass
 
 func add_turrets():
+	set_shoot_controller()
 	$ShootController.add_turrets()
 
 func add_laser():
+	$Laser.enabled = true
 	pass
 
-func set_shoot_controller(val):
-	$ShootController.enabled = val
-	if val:
+func set_shoot_controller():
+	if !$ShootController.enabled:
+		$ShootController.set_active(true)
+	else:
+		$ShootController.set_active(false)
+	if $ShootController.enabled:
 		$ShootController.set_damage(damage)
 		$ShootController.set_firerate(fireRate)
+
+func increment_magnet():
+	$MagnetArea.increment_magnet()
 
 func get_damage():
 	return damage"

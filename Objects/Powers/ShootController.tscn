@@ -15,28 +15,32 @@ var enabled = false
 func _ready():
 	initialize_turrets()
 	if enabled:
-		check_turrets()
+		enable_turrets()
 	pass
+
+func set_active(val):
+	enabled = val
+	enable_turrets(val)
 
 func initialize_turrets():
 	for i in get_children():
 		i.enabled = false
 	pass
 
-func check_turrets():
+func enable_turrets(val):
 	match powerLevel:
 		1:
-			$Turret.enabled = true
+			$Turret.enabled = val
 		2:
-			$Turret.enabled = true
-			$Turret2.enabled = true
-			$Turret3.enabled = true
+			$Turret.enabled = val
+			$Turret2.enabled = val
+			$Turret3.enabled = val
 		3:
-			$Turret.enabled = true
-			$Turret2.enabled = true
-			$Turret3.enabled = true
-			$Turret4.enabled = true
-			$Turret5.enabled = true
+			$Turret.enabled = val
+			$Turret2.enabled = val
+			$Turret3.enabled = val
+			$Turret4.enabled = val
+			$Turret5.enabled = val
 	pass
 
 func get_damage():
@@ -46,7 +50,7 @@ func add_turrets():
 	powerLevel += 1
 	if powerLevel > 3:
 		powerLevel = 3
-	check_turrets()
+	enable_turrets(true)
 	syncronize_turrets()
 	pass
 

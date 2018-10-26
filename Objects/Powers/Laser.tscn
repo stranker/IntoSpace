@@ -101,7 +101,7 @@ anim_offset_random = 0.0
 anim_loop = false
 _sections_unfolded = [ "Gravity", "Initial Velocity", "Linear Accel", "Scale", "Spread" ]
 
-[node name="Laser" type="Node2D" index="0"]
+[node name="Laser" type="Node2D"]
 
 script = SubResource( 1 )
 
@@ -172,8 +172,8 @@ _sections_unfolded = [ "Process Material", "Textures", "Time" ]
 [node name="Timer" type="Timer" parent="." index="3"]
 
 process_mode = 1
-wait_time = 20.0
-one_shot = true
+wait_time = 15.0
+one_shot = false
 autostart = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

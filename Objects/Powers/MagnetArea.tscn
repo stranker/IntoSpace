@@ -1,13 +1,33 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Objects/Powers/MagnetArea.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/Magnet.png" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
 
 custom_solver_bias = 0.0
-radius = 10.0
+radius = 50.0
 
-[node name="MagnetArea" type="Area2D"]
+[sub_resource type="Animation" id=2]
+
+resource_name = "Idle"
+length = 2.0
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.0718431 ), Color( 1, 1, 1, 0.171294 ) ]
+}
+
+[node name="MagnetArea" type="Area2D" index="0"]
 
 input_pickable = true
 gravity_point = true
@@ -23,6 +43,27 @@ initialRadius = 50
 
 [node name="Colision" type="CollisionShape2D" parent="." index="0"]
 
+position = Vector2( -1.05408, -2.6352 )
 shape = SubResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Sprite" type="Sprite" parent="." index="1"]
+
+modulate = Color( 1, 1, 1, 0.171294 )
+position = Vector2( 0.170921, -0.201656 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 2 )
+offset = Vector2( -0.830917, -1.66512 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="Anim" type="AnimationPlayer" parent="." index="2"]
+
+root_node = NodePath("..")
+autoplay = "Idle"
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/Idle = SubResource( 2 )
+blend_times = [  ]
 
 

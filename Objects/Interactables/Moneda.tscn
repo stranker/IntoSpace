@@ -18,6 +18,7 @@ func _ready():
 
 func _process(delta):
 	if magneticArea:
+		speed = 400
 		direction = (magneticArea.global_position - global_position).normalized()
 	translate(direction * speed * delta)
 	pass
