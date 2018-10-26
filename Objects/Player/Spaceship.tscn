@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Objects/Interactables/Bullet.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/Spacehip.png" type="Texture" id=2]
 [ext_resource path="res://Objects/Powers/MagnetArea.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Objects/Powers/Shield.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Objects/Powers/HoverShooter.tscn" type="PackedScene" id=5]
 
 [sub_resource type="GDScript" id=1]
 
@@ -83,7 +84,8 @@ func increment_firerate():
 	pass
 
 func add_shield():
-	
+	$Shield.visible
+	$Shield.create_shield()
 	pass
 
 func add_hover_missile():
@@ -146,6 +148,10 @@ position = Vector2( 0.291962, 7.59167 )
 [node name="Shield" parent="." index="5" instance=ExtResource( 4 )]
 
 position = Vector2( -0.429291, 5.79529 )
+
+[node name="HoverShooter" parent="." index="6" instance=ExtResource( 5 )]
+
+position = Vector2( 0, -39.0247 )
 
 [connection signal="timeout" from="ShootTimer" to="." method="_on_ShootTimer_timeout"]
 
