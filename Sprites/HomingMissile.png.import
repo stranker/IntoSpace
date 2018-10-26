@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/HoverMissile.png-c565a1fb0eb36c87c2b72d566b91b4d9.stex"
+path="res://.import/HomingMissile.png-03d070fb67c669d66ed5390ffe626e85.stex"
 
 [deps]
 
-source_file="res://Sprites/HoverMissile.png"
-dest_files=[ "res://.import/HoverMissile.png-c565a1fb0eb36c87c2b72d566b91b4d9.stex" ]
+source_file="res://Sprites/HomingMissile.png"
+dest_files=[ "res://.import/HomingMissile.png-03d070fb67c669d66ed5390ffe626e85.stex" ]
 
 [params]
 

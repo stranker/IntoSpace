@@ -9,9 +9,12 @@ resource_name = "Bullet.gd"
 script/source = "extends Area2D
 
 export (int) var speed = 1300
-var movement = Vector2(0,-1)
+var direction = Vector2(0,-1)
 var active = true
 var damage
+
+func set_direction(dir):
+	direction = dir
 
 func _ready():
 	add_to_group(\"Bullet\")
@@ -19,7 +22,8 @@ func _ready():
 
 func _process(delta):
 	if active:
-		translate(speed * delta * movement)
+		translate(speed * delta * direction)
+		rotation = deg2rad(rad2deg((direction * speed).angle()) + 90)
 	pass
 
 func set_damage(val):
@@ -223,8 +227,9 @@ tracks/3/keys = {
 } ]
 }
 
-[node name="Bullet" type="Area2D"]
+[node name="Bullet" type="Area2D" index="0"]
 
+show_behind_parent = true
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -233,6 +238,7 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 script = SubResource( 1 )
+_sections_unfolded = [ "Visibility" ]
 speed = 1300
 
 [node name="Sprite" type="Sprite" parent="." index="0"]

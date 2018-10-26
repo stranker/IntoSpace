@@ -7,9 +7,10 @@
 resource_name = "Moneda.gd"
 script/source = "extends Area2D
 
+var direction = Vector2(0,-1)
 var taken = false
 var magneticArea = null
-var speed = 400
+var speed = 100
 
 func _ready():
 	$Anim.advance(rand_range(0,$Anim.current_animation_length))
@@ -17,8 +18,8 @@ func _ready():
 
 func _process(delta):
 	if magneticArea:
-		var direction = (magneticArea.global_position - global_position).normalized()
-		translate(direction * speed * delta)
+		direction = (magneticArea.global_position - global_position).normalized()
+	translate(direction * speed * delta)
 	pass
 
 func _on_Moneda_area_entered(area):

@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Objects/Interactables/Bullet.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/Spacehip.png" type="Texture" id=2]
 [ext_resource path="res://Objects/Powers/MagnetArea.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Objects/Powers/Shield.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Objects/Powers/HoverShooter.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Objects/Powers/HomingShooter.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Objects/Powers/ShootController.tscn" type="PackedScene" id=6]
 
 [sub_resource type="GDScript" id=1]
 
@@ -14,23 +15,22 @@ script/source = "extends Area2D
 var direction = Vector2(0,-1)
 var offsetPos = Vector2()
 export (PackedScene) var bullet
-var canShoot = true
+var shootController = true
 var moving = false
 var sizeSprite
 var dragging = false
 export (int) var damage = 1
-export (float) var fireRate = 0.4
+export (float) var fireRate = 0.6
 
 func _ready():
 	sizeSprite = $Sprite.texture.get_size() * $Sprite.scale
 	Global.player = self
-	$ShootTimer.wait_time = fireRate
 	add_to_group(\"Player\")
+	set_shoot_controller(shootController)
 	pass
 
 func _process(delta):
 	movement(delta)
-	shoot()
 	clamp_position()
 	if !dragging:
 		offsetPos = Vector2()
@@ -51,9 +51,6 @@ func movement(delta):
 	position += offsetPos
 	pass
 
-func _on_ShootTimer_timeout():
-	canShoot = true
-	pass # replace with function body
 
 func clamp_position():
 	if position.x < sizeSprite.x/2:
@@ -62,25 +59,19 @@ func clamp_position():
 		position.x = get_viewport_rect().size.x- sizeSprite.x/2
 	if position.y < Global.camera.position.y - get_viewport_rect().size.y/2 + 250:
 		position.y = Global.camera.position.y - get_viewport_rect().size.y/2 + 250
-
-func shoot():
-	if canShoot:
-		var b = bullet.instance()
-		get_tree().root.add_child(b)
-		b.global_position = $ShootPos.global_position
-		b.set_damage(damage)
-		canShoot = false
-		$ShootTimer.start()
+	elif position.y > Global.camera.position.y + get_viewport_rect().size.y/2 - sizeSprite.y/2:
+		position.y = Global.camera.position.y + get_viewport_rect().size.y/2 - sizeSprite.y/2
 
 func increment_damage():
 	damage += 1
+	$ShootController.set_damage(damage)
 	pass
 
 func increment_firerate():
 	fireRate -= 0.05
-	if fireRate <= 0.1:
-		fireRate = 0.1
-	$ShootTimer.wait_time = fireRate
+	if fireRate <= 0.3:
+		fireRate = 0.3
+	$ShootController.set_firerate(fireRate)
 	pass
 
 func add_shield():
@@ -88,12 +79,24 @@ func add_shield():
 	$Shield.create_shield()
 	pass
 
-func add_hover_missile():
-	$HoverShooter.enabled = true
+func add_homing_missile():
+	$HomingShooter.enabled = true
 	pass
 
+func add_turrets():
+	$ShootController.add_turrets()
+
 func add_laser():
-	pass"
+	pass
+
+func set_shoot_controller(val):
+	$ShootController.enabled = val
+	if val:
+		$ShootController.set_damage(damage)
+		$ShootController.set_firerate(fireRate)
+
+func get_damage():
+	return damage"
 _sections_unfolded = [ "Resource" ]
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -115,7 +118,7 @@ script = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 bullet = ExtResource( 1 )
 damage = 1
-fireRate = 0.4
+fireRate = 0.6
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
@@ -131,29 +134,20 @@ scale = Vector2( 7.80632, 10.1048 )
 shape = SubResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="ShootPos" type="Position2D" parent="." index="2"]
-
-position = Vector2( 0, -44.1055 )
-
-[node name="ShootTimer" type="Timer" parent="." index="3"]
-
-process_mode = 1
-wait_time = 0.4
-one_shot = true
-autostart = false
-
-[node name="MagnetArea" parent="." index="4" instance=ExtResource( 3 )]
+[node name="MagnetArea" parent="." index="2" instance=ExtResource( 3 )]
 
 position = Vector2( 0.291962, 7.59167 )
 
-[node name="Shield" parent="." index="5" instance=ExtResource( 4 )]
+[node name="Shield" parent="." index="3" instance=ExtResource( 4 )]
 
 position = Vector2( -0.429291, 5.79529 )
 
-[node name="HoverShooter" parent="." index="6" instance=ExtResource( 5 )]
+[node name="HomingShooter" parent="." index="4" instance=ExtResource( 5 )]
 
 position = Vector2( 0, -39.0247 )
 
-[connection signal="timeout" from="ShootTimer" to="." method="_on_ShootTimer_timeout"]
+[node name="ShootController" parent="." index="5" instance=ExtResource( 6 )]
+
+position = Vector2( 0, -22.283 )
 
 

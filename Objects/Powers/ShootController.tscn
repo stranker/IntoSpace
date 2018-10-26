@@ -1,0 +1,100 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Objects/Powers/Turret.tscn" type="PackedScene" id=1]
+
+[sub_resource type="GDScript" id=1]
+
+resource_name = "ShootController.gd"
+script/source = "extends Node2D
+
+var powerLevel = 1
+var damage = 0
+var firerate = 1
+var enabled = true
+
+func _ready():
+	initialize_turrets()
+	if enabled:
+		check_turrets()
+	pass
+
+func initialize_turrets():
+	for i in get_children():
+		i.enabled = false
+	pass
+
+func check_turrets():
+	match powerLevel:
+		1:
+			$Turret.enabled = true
+		2:
+			$Turret.enabled = true
+			$Turret2.enabled = true
+			$Turret3.enabled = true
+		3:
+			$Turret.enabled = true
+			$Turret2.enabled = true
+			$Turret3.enabled = true
+			$Turret4.enabled = true
+			$Turret5.enabled = true
+	pass
+
+func get_damage():
+	return damage
+
+func add_turrets():
+	powerLevel += 1
+	if powerLevel > 3:
+		powerLevel = 3
+	check_turrets()
+	syncronize_turrets()
+	pass
+
+func syncronize_turrets():
+	for i in get_children():
+		i.reset_timer()
+	pass
+
+func set_firerate(val):
+	firerate = val
+	for i in get_children():
+		i.set_firerate(firerate)
+
+func set_damage(val):
+	damage = val
+	for i in get_children():
+		i.set_damage(damage)"
+_sections_unfolded = [ "Resource" ]
+
+[node name="ShootController" type="Node2D"]
+
+show_behind_parent = true
+script = SubResource( 1 )
+_sections_unfolded = [ "Visibility" ]
+
+[node name="Turret" parent="." index="0" instance=ExtResource( 1 )]
+
+position = Vector2( 0, -20 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Turret2" parent="." index="1" instance=ExtResource( 1 )]
+
+position = Vector2( 2, -18 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Turret3" parent="." index="2" instance=ExtResource( 1 )]
+
+position = Vector2( -2, -18 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Turret4" parent="." index="3" instance=ExtResource( 1 )]
+
+position = Vector2( -3, -17 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Turret5" parent="." index="4" instance=ExtResource( 1 )]
+
+position = Vector2( 3, -17 )
+_sections_unfolded = [ "Transform" ]
+
+

@@ -38,7 +38,7 @@ func _on_Shield_button_down():
 
 
 func _on_Hover_button_down():
-	Global.player.add_hover_missile()
+	Global.player.add_homing_missile()
 	pass # replace with function body
 
 
@@ -50,16 +50,22 @@ func _on_Damage_button_down():
 func _on_Firerate_button_down():
 	Global.player.increment_firerate()
 	pass # replace with function body
+
+
+func _on_Shoots_button_down():
+	Global.player.add_turrets()
+	pass # replace with function body
 "
 _sections_unfolded = [ "Resource" ]
 
-[node name="GameScene" type="Node2D" index="0"]
+[node name="GameScene" type="Node2D"]
 
 script = SubResource( 1 )
 
 [node name="SpaceShip" parent="." index="0" instance=ExtResource( 1 )]
 
 position = Vector2( 334.39, 1051.15 )
+fireRate = 0.6
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." index="1"]
 
@@ -105,8 +111,6 @@ _sections_unfolded = [ "Offset" ]
 
 [node name="UIPanel" parent="." index="2" instance=ExtResource( 3 )]
 
-editor/display_folded = true
-
 [node name="DebugPanel" type="Button" parent="UIPanel" index="1"]
 
 anchor_left = 0.0
@@ -134,7 +138,6 @@ align = 1
 
 [node name="Panel" type="Panel" parent="UIPanel/DebugPanel" index="0"]
 
-visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -142,7 +145,7 @@ anchor_bottom = 0.0
 margin_left = 2.0
 margin_top = 70.0
 margin_right = 177.0
-margin_bottom = 398.0
+margin_bottom = 470.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -250,6 +253,31 @@ text = "INCREMENT FIRERATE"
 flat = false
 align = 1
 
+[node name="Shoots" type="Button" parent="UIPanel/DebugPanel/Panel" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 2.0
+margin_top = 321.0
+margin_right = 170.0
+margin_bottom = 388.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "ADD SHOOTS"
+flat = false
+align = 1
+
 [node name="Camara" parent="." index="3" instance=ExtResource( 4 )]
 
 position = Vector2( 361.123, 636.903 )
@@ -263,6 +291,8 @@ position = Vector2( 361.123, 636.903 )
 [connection signal="button_down" from="UIPanel/DebugPanel/Panel/Damage" to="." method="_on_Damage_button_down"]
 
 [connection signal="button_down" from="UIPanel/DebugPanel/Panel/Firerate" to="." method="_on_Firerate_button_down"]
+
+[connection signal="button_down" from="UIPanel/DebugPanel/Panel/Shoots" to="." method="_on_Shoots_button_down"]
 
 
 [editable path="UIPanel"]

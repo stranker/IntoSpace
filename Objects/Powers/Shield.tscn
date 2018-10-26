@@ -11,9 +11,15 @@ script/source = "extends Area2D
 var life = 3
 var damage = 10
 var enabled = false
+var rotationAngle = 0
 
 func _ready():
 	visible = enabled
+
+func _process(delta):
+	rotationAngle += delta * 5
+	rotation = rotationAngle
+	pass
 
 func _on_Shield_area_entered(area):
 	if area.is_in_group(\"Enemy\") and enabled and area.alive:
@@ -52,7 +58,7 @@ polygon = PoolVector2Array( -37.4216, 23.9418, -29.3355, 17.2826, -34.092, 1.348
 custom_solver_bias = 0.0
 radius = 53.7697
 
-[node name="Shield" type="Area2D"]
+[node name="Shield" type="Area2D" index="0"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
