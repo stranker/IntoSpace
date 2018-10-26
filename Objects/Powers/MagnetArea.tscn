@@ -27,7 +27,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0.0718431 ), Color( 1, 1, 1, 0.171294 ) ]
 }
 
-[node name="MagnetArea" type="Area2D" index="0"]
+[node name="MagnetArea" type="Area2D"]
 
 input_pickable = true
 gravity_point = true
