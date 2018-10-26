@@ -9,9 +9,11 @@ script/source = "extends Node2D
 
 export (PackedScene) var hoverMissile
 var canShoot = true
+var enabled = false
 
 func _process(delta):
-	shoot()
+	if enabled:
+		shoot()
 	pass
 
 func shoot():

@@ -3,7 +3,7 @@
 [ext_resource path="res://Sprites/big_circle.png" type="Texture" id=1]
 [ext_resource path="res://Sprites/Shield.png" type="Texture" id=2]
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=1]
 
 resource_name = "Shield.gd"
 script/source = "extends Area2D
@@ -16,7 +16,7 @@ func _ready():
 	visible = enabled
 
 func _on_Shield_area_entered(area):
-	if area.is_in_group(\"Enemy\") and enabled:
+	if area.is_in_group(\"Enemy\") and enabled and area.alive:
 		area.take_damage(damage)
 		take_damage()
 	pass
@@ -41,13 +41,13 @@ func _on_DisappearTimer_timeout():
 "
 _sections_unfolded = [ "Resource" ]
 
-[sub_resource type="OccluderPolygon2D" id=1]
+[sub_resource type="OccluderPolygon2D" id=2]
 
 closed = true
 cull_mode = 0
 polygon = PoolVector2Array( -37.4216, 23.9418, -29.3355, 17.2826, -34.092, 1.34818, -28.8598, -19.105, -16.9684, -30.9963, -3.88795, -35.515, 8.95473, -33.8503, 20.8461, -29.0937, 31.3105, -16.7267, 35.5914, -3.88403, 33.2131, 7.05602, 29.17, 19.8987, 20.3704, 29.8874, 9.90604, 33.217, -6.50404, 34.644, -16.7306, 30.8388, -24.1033, 23.9418, -28.3842, 18.9474, -35.9946, 25.6066, -21.0115, 38.2114, -0.796188, 42.0166, 12.9978, 42.4923, 26.7918, 37.0223, 37.9697, 7.53168, 42.7262, -12.6836, 19.4191, -42.8877, -15.0658, -45.0281, -37.1838, -25.2885, -43.6051, 5.39124 )
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id=3]
 
 custom_solver_bias = 0.0
 radius = 53.7697
@@ -61,7 +61,7 @@ linear_damp = 0.1
 angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
-script = SubResource( 4 )
+script = SubResource( 1 )
 
 [node name="Light2D" type="Light2D" parent="." index="0"]
 
@@ -101,13 +101,13 @@ _sections_unfolded = [ "Transform", "Visibility" ]
 
 position = Vector2( 82, 100 )
 scale = Vector2( 1.00682, 1.00682 )
-occluder = SubResource( 1 )
+occluder = SubResource( 2 )
 light_mask = 1
 _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="2"]
 
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="DisappearTimer" type="Timer" parent="." index="3"]
 
