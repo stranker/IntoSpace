@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Objects/Interactables/Bullet.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/Spacehip.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Objects/Powers/Shield.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Objects/Powers/HomingShooter.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Objects/Powers/ShootController.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Objects/Powers/Laser.tscn" type="PackedScene" id=7]
 
 [sub_resource type="GDScript" id=1]
 
@@ -15,7 +16,7 @@ script/source = "extends Area2D
 var direction = Vector2(0,-1)
 var offsetPos = Vector2()
 export (PackedScene) var bullet
-var shootController = true
+var shootController = false
 var moving = false
 var sizeSprite
 var dragging = false
@@ -115,7 +116,7 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 script = SubResource( 1 )
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Collision", "Transform" ]
 bullet = ExtResource( 1 )
 damage = 1
 fireRate = 0.6
@@ -149,5 +150,11 @@ position = Vector2( 0, -39.0247 )
 [node name="ShootController" parent="." index="5" instance=ExtResource( 6 )]
 
 position = Vector2( 0, -22.283 )
+
+[node name="Laser" parent="." index="6" instance=ExtResource( 7 )]
+
+show_behind_parent = true
+position = Vector2( 0.970612, 15.2059 )
+_sections_unfolded = [ "Visibility" ]
 
 

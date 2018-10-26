@@ -58,7 +58,7 @@ polygon = PoolVector2Array( -37.4216, 23.9418, -29.3355, 17.2826, -34.092, 1.348
 custom_solver_bias = 0.0
 radius = 53.7697
 
-[node name="Shield" type="Area2D" index="0"]
+[node name="Shield" type="Area2D"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )

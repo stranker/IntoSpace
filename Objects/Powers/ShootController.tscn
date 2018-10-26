@@ -10,7 +10,7 @@ script/source = "extends Node2D
 var powerLevel = 1
 var damage = 0
 var firerate = 1
-var enabled = true
+var enabled = false
 
 func _ready():
 	initialize_turrets()
