@@ -19,8 +19,6 @@ export (PackedScene) var bullet
 var moving = false
 var sizeSprite
 var dragging = false
-export (int) var damage = 1
-export (float) var fireRate = 0.6
 
 func _ready():
 	sizeSprite = $Sprite.texture.get_size() * $Sprite.scale
@@ -63,15 +61,7 @@ func clamp_position():
 		position.y = Global.camera.position.y + get_viewport_rect().size.y/2 - sizeSprite.y/2
 
 func increment_damage():
-	damage += 1
-	$ShootController.set_damage(damage)
-	pass
-
-func increment_firerate():
-	fireRate -= 0.05
-	if fireRate <= 0.3:
-		fireRate = 0.3
-	$ShootController.set_firerate(fireRate)
+	$ShootController.add_damage()
 	pass
 
 func add_shield():
@@ -91,7 +81,7 @@ func add_turrets():
 	$ShootController.add_turrets()
 
 func add_laser():
-	$Laser.enabled = true
+	$Laser.set_active(true)
 	pass
 
 func set_shoot_controller():
@@ -99,15 +89,9 @@ func set_shoot_controller():
 		$ShootController.set_active(true)
 	else:
 		$ShootController.set_active(false)
-	if $ShootController.enabled:
-		$ShootController.set_damage(damage)
-		$ShootController.set_firerate(fireRate)
 
 func increment_magnet():
-	$MagnetArea.increment_magnet()
-
-func get_damage():
-	return damage"
+	$MagnetArea.increment_magnet()"
 _sections_unfolded = [ "Resource" ]
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -128,8 +112,6 @@ audio_bus_name = "Master"
 script = SubResource( 1 )
 _sections_unfolded = [ "Collision", "Transform" ]
 bullet = ExtResource( 1 )
-damage = 1
-fireRate = 0.6
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 

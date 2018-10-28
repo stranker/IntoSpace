@@ -103,7 +103,17 @@ timeSpawn = 2.0
 position = Vector2( 199.422, -790.216 )
 timeSpawn = 2.0
 
-[node name="Anim" type="AnimationPlayer" parent="." index="3"]
+[node name="AsteroidSpawner4" parent="." index="3" instance=ExtResource( 1 )]
+
+position = Vector2( -137.591, -800.722 )
+timeSpawn = 2.0
+
+[node name="AsteroidSpawner5" parent="." index="4" instance=ExtResource( 1 )]
+
+position = Vector2( 2.40921, -830.722 )
+timeSpawn = 2.0
+
+[node name="Anim" type="AnimationPlayer" parent="." index="5"]
 
 root_node = NodePath("..")
 autoplay = ""
@@ -113,11 +123,15 @@ playback_speed = 1.0
 anims/MinimalShake = SubResource( 2 )
 blend_times = [  ]
 
-[node name="SpawnerClusterMonedas" parent="." index="4" instance=ExtResource( 2 )]
+[node name="SpawnerClusterMonedas" parent="." index="6" instance=ExtResource( 2 )]
 
-position = Vector2( 2.3884, -659.393 )
+position = Vector2( -167.591, -860.722 )
 
-[node name="ShakeTime" type="Timer" parent="." index="5"]
+[node name="SpawnerClusterMonedas2" parent="." index="7" instance=ExtResource( 2 )]
+
+position = Vector2( 142.409, -730.722 )
+
+[node name="ShakeTime" type="Timer" parent="." index="8"]
 
 process_mode = 1
 wait_time = 1.0

@@ -8,8 +8,8 @@ resource_name = "ShootController.gd"
 script/source = "extends Node2D
 
 var powerLevel = 1
-var damage = 0
-var firerate = 1
+export (float) var firerate = 0.6
+export (int) var damage = 1
 var enabled = false
 
 func _ready():
@@ -18,13 +18,27 @@ func _ready():
 		enable_turrets()
 	pass
 
+func add_damage():
+	damage += 1
+
 func set_active(val):
 	enabled = val
 	enable_turrets(val)
 
 func initialize_turrets():
 	for i in get_children():
-		i.enabled = false
+		if i.name.find(\"Turret\")>0:
+			i.enabled = false
+	pass
+
+func _input(event):
+	if event is InputEventScreenTouch:
+		if event.pressed:
+			firerate -= 0.05
+			syncronize_turrets()
+			if firerate <= 0.2:
+				firerate = 0.2
+			$Timer.start()
 	pass
 
 func enable_turrets(val):
@@ -56,7 +70,8 @@ func add_turrets():
 
 func syncronize_turrets():
 	for i in get_children():
-		i.reset_timer()
+		if i.name.find(\"Turret\")>0:
+			i.reset_timer()
 	pass
 
 func set_firerate(val):
@@ -64,17 +79,19 @@ func set_firerate(val):
 	for i in get_children():
 		i.set_firerate(firerate)
 
-func set_damage(val):
-	damage = val
-	for i in get_children():
-		i.set_damage(damage)"
+func _on_Timer_timeout():
+	firerate = 0.6
+	pass # replace with function body
+"
 _sections_unfolded = [ "Resource" ]
 
-[node name="ShootController" type="Node2D"]
+[node name="ShootController" type="Node2D" index="0"]
 
 show_behind_parent = true
 script = SubResource( 1 )
 _sections_unfolded = [ "Visibility" ]
+firerate = 0.6
+damage = 1
 
 [node name="Turret" parent="." index="0" instance=ExtResource( 1 )]
 
@@ -100,5 +117,14 @@ _sections_unfolded = [ "Transform" ]
 
 position = Vector2( 3, -17 )
 _sections_unfolded = [ "Transform" ]
+
+[node name="Timer" type="Timer" parent="." index="5"]
+
+process_mode = 1
+wait_time = 0.7
+one_shot = true
+autostart = false
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 
 

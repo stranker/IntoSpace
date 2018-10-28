@@ -10,11 +10,15 @@ script/source = "extends Node2D
 
 var damage = 10
 var enemy = null
-var enabled = true
+var enabled = false
 
 func _ready():
 	$RayCast2D.add_exception(get_parent())
 	pass
+
+func set_active(val):
+	enabled = val
+	$Timer.start()
 
 func _process(delta):
 	visible = enabled
@@ -47,20 +51,20 @@ func _on_Timer_timeout():
 "
 _sections_unfolded = [ "Resource" ]
 
-[sub_resource type="Curve" id=3]
+[sub_resource type="Curve" id=2]
 
 min_value = 0.0
 max_value = 1.0
 bake_resolution = 100
 _data = [ Vector2( 0, 1 ), 0.0, -1.45483, 0, 0, Vector2( 1, 0.285156 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=4]
+[sub_resource type="CurveTexture" id=3]
 
 flags = 4
 width = 2048
-curve = SubResource( 3 )
+curve = SubResource( 2 )
 
-[sub_resource type="ParticlesMaterial" id=2]
+[sub_resource type="ParticlesMaterial" id=4]
 
 render_priority = 0
 trail_divisor = 1
@@ -90,7 +94,7 @@ angle = 0.0
 angle_random = 0.0
 scale = 1.0
 scale_random = 0.0
-scale_curve = SubResource( 4 )
+scale_curve = SubResource( 3 )
 color = Color( 1, 1, 1, 1 )
 hue_variation = 0.0
 hue_variation_random = 0.0
@@ -162,7 +166,7 @@ fract_delta = true
 visibility_rect = Rect2( -100, -100, 200, 200 )
 local_coords = true
 draw_order = 0
-process_material = SubResource( 2 )
+process_material = SubResource( 4 )
 texture = ExtResource( 2 )
 normal_map = null
 h_frames = 1
@@ -173,8 +177,8 @@ _sections_unfolded = [ "Process Material", "Textures", "Time" ]
 
 process_mode = 1
 wait_time = 15.0
-one_shot = false
-autostart = true
+one_shot = true
+autostart = false
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 

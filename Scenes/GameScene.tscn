@@ -39,12 +39,6 @@ func _on_Damage_button_down():
 	Global.player.increment_damage()
 	pass # replace with function body
 
-
-func _on_Firerate_button_down():
-	Global.player.increment_firerate()
-	pass # replace with function body
-
-
 func _on_Shoots_button_down():
 	Global.player.add_turrets()
 	pass # replace with function body
@@ -151,8 +145,8 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 2.0
 margin_top = 70.0
-margin_right = 360.0
-margin_bottom = 597.0
+margin_right = 190.0
+margin_bottom = 599.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -210,41 +204,16 @@ text = "INCREMENT DAMAGE"
 flat = false
 align = 1
 
-[node name="Firerate" type="Button" parent="UIPanel/DebugPanel/Panel" index="2"]
+[node name="Shoots" type="Button" parent="UIPanel/DebugPanel/Panel" index="2"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 2.0
-margin_top = 148.0
-margin_right = 170.0
-margin_bottom = 215.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "INCREMENT FIRERATE"
-flat = false
-align = 1
-
-[node name="Shoots" type="Button" parent="UIPanel/DebugPanel/Panel" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 2.0
-margin_top = 218.0
-margin_right = 170.0
-margin_bottom = 285.0
+margin_left = 4.0
+margin_top = 147.0
+margin_right = 172.0
+margin_bottom = 214.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -260,16 +229,16 @@ text = "ADD SHOOTS"
 flat = false
 align = 1
 
-[node name="Shield" type="Button" parent="UIPanel/DebugPanel/Panel" index="4"]
+[node name="Shield" type="Button" parent="UIPanel/DebugPanel/Panel" index="3"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 3.0
-margin_top = 293.0
-margin_right = 171.0
-margin_bottom = 360.0
+margin_left = 5.0
+margin_top = 219.0
+margin_right = 173.0
+margin_bottom = 286.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -285,16 +254,16 @@ text = "ADD SHIELD"
 flat = false
 align = 1
 
-[node name="Homing" type="Button" parent="UIPanel/DebugPanel/Panel" index="5"]
+[node name="Homing" type="Button" parent="UIPanel/DebugPanel/Panel" index="4"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 1.0
-margin_top = 377.0
-margin_right = 180.0
-margin_bottom = 444.0
+margin_left = 6.0
+margin_top = 294.0
+margin_right = 185.0
+margin_bottom = 361.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -310,16 +279,16 @@ text = "ON/OFF HOMING MISSILE"
 flat = false
 align = 1
 
-[node name="Laser" type="Button" parent="UIPanel/DebugPanel/Panel" index="6"]
+[node name="Laser" type="Button" parent="UIPanel/DebugPanel/Panel" index="5"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 1.0
-margin_top = 456.0
-margin_right = 169.0
-margin_bottom = 523.0
+margin_left = 8.0
+margin_top = 373.0
+margin_right = 176.0
+margin_bottom = 440.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -335,16 +304,16 @@ text = "ADD LASER"
 flat = false
 align = 1
 
-[node name="MagnetCoin" type="Button" parent="UIPanel/DebugPanel/Panel" index="7"]
+[node name="MagnetCoin" type="Button" parent="UIPanel/DebugPanel/Panel" index="6"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 181.0
-margin_top = 5.0
-margin_right = 349.0
-margin_bottom = 72.0
+margin_left = 5.0
+margin_top = 448.0
+margin_right = 173.0
+margin_bottom = 515.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -369,8 +338,6 @@ position = Vector2( 361.123, 636.903 )
 [connection signal="button_down" from="UIPanel/DebugPanel/Panel/Shoot" to="." method="_on_Shoot_button_down"]
 
 [connection signal="button_down" from="UIPanel/DebugPanel/Panel/Damage" to="." method="_on_Damage_button_down"]
-
-[connection signal="button_down" from="UIPanel/DebugPanel/Panel/Firerate" to="." method="_on_Firerate_button_down"]
 
 [connection signal="button_down" from="UIPanel/DebugPanel/Panel/Shoots" to="." method="_on_Shoots_button_down"]
 

@@ -10,7 +10,7 @@ script/source = "extends Position2D
 export (PackedScene) var bullet
 var canShoot = true
 onready var damage = get_parent().get_damage()
-var firerate = 1
+var firerate
 var enabled = false
 var direction = Vector2()
 
@@ -27,6 +27,8 @@ func set_firerate(val):
 
 func _process(delta):
 	if enabled:
+		damage = get_parent().get_damage()
+		set_firerate(get_parent().firerate)
 		shoot()
 	pass
 
