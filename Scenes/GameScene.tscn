@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Objects/Player/Spaceship.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/Background1.png" type="Texture" id=2]
 [ext_resource path="res://Objects/UI/UIPanel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Objects/Interactables/Camara.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Objects/Enemies/ScoutEnemy.tscn" type="PackedScene" id=5]
 
 [sub_resource type="GDScript" id=1]
 
@@ -60,7 +61,7 @@ func _on_MagnetCoin_button_down():
 "
 _sections_unfolded = [ "Resource" ]
 
-[node name="GameScene" type="Node2D"]
+[node name="GameScene" type="Node2D" index="0"]
 
 script = SubResource( 1 )
 
@@ -111,6 +112,8 @@ texture = ExtResource( 2 )
 _sections_unfolded = [ "Offset" ]
 
 [node name="UIPanel" parent="." index="2" instance=ExtResource( 3 )]
+
+editor/display_folded = true
 
 [node name="DebugPanel" type="Button" parent="UIPanel" index="1"]
 
@@ -332,6 +335,10 @@ align = 1
 [node name="Camara" parent="." index="3" instance=ExtResource( 4 )]
 
 position = Vector2( 361.123, 636.903 )
+
+[node name="ScoutEnemy" parent="." index="4" instance=ExtResource( 5 )]
+
+position = Vector2( 188.582, -115.876 )
 
 [connection signal="button_down" from="UIPanel/DebugPanel" to="." method="_on_DebugPanel_button_down"]
 
