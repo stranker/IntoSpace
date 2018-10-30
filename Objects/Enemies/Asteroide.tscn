@@ -15,6 +15,7 @@ var life = 2
 var alive = true
 var initialRotation
 var points = 100
+var damage = 1
 
 func _ready():
 	randomize()
@@ -44,7 +45,7 @@ func is_alive():
 	return alive
 
 func calculate_direction():
-	direction.x = rand_range(-5,5)
+	direction.x = rand_range(-1,1)
 	pass
 
 func _on_AliveTimer_timeout():

@@ -124,10 +124,14 @@ shape = SubResource( 2 )
 bullet = ExtResource( 1 )
 fromEnemy = true
 
+[node name="FireRate" parent="Turret" index="0"]
+
+wait_time = 3.0
+
 [node name="MovementTimer" type="Timer" parent="." index="3"]
 
 process_mode = 1
-wait_time = 4.0
+wait_time = 5.0
 one_shot = true
 autostart = true
 

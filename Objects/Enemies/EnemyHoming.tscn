@@ -4,6 +4,7 @@
 
 [sub_resource type="GDScript" id=1]
 
+resource_name = "EnemyHoming.gd"
 script/source = "extends Area2D
 
 var speed = 300
@@ -31,13 +32,14 @@ func movement(delta):
 		rotation = directionToPlayer.angle()
 	translate(velocity * delta)
 	pass"
+_sections_unfolded = [ "Resource" ]
 
 [sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
 extents = Vector2( 6.37975, 23.3573 )
 
-[node name="EnemyHoming" type="Area2D"]
+[node name="EnemyHoming" type="Area2D" index="0"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )

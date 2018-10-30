@@ -102,7 +102,14 @@ func increment_magnet():
 func take_damage(val):
 	life -= val
 	if life <= 0:
-		$Anim.play(\"Dead\")"
+		$Anim.play(\"Dead\")
+
+func _on_SpaceShip_area_entered(area):
+	if area.is_in_group(\"Enemy\"):
+		take_damage(area.damage)
+		area.take_damage(9999)
+	pass # replace with function body
+"
 _sections_unfolded = [ "Resource" ]
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -177,5 +184,7 @@ playback_default_blend_time = 0.0
 playback_speed = 1.0
 anims/Dead = SubResource( 3 )
 blend_times = [  ]
+
+[connection signal="area_entered" from="." to="." method="_on_SpaceShip_area_entered"]
 
 
