@@ -60,6 +60,9 @@ func enable_turrets(val):
 func get_damage():
 	return damage
 
+func get_firerate():
+	return firerate
+
 func add_turrets():
 	powerLevel += 1
 	if powerLevel > 3:
@@ -85,7 +88,7 @@ func _on_Timer_timeout():
 "
 _sections_unfolded = [ "Resource" ]
 
-[node name="ShootController" type="Node2D" index="0"]
+[node name="ShootController" type="Node2D"]
 
 show_behind_parent = true
 script = SubResource( 1 )

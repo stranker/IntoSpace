@@ -1,0 +1,95 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Objects/Interactables/EnemyBullet.tscn" type="PackedScene" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://Objects/Powers/Turret.tscn" type="PackedScene" id=3]
+
+[sub_resource type="GDScript" id=1]
+
+resource_name = "TankEnemy.gd"
+script/source = "extends \"res://Scripts/Enemy.gd\"
+
+export (PackedScene) var bullet
+export (float) var firerate
+var moving = true
+var directionPlayer
+
+func _ready():
+	randomize()
+	if position.x < get_viewport_rect().size.x / 2:
+		direction.x = rand_range(0,1)
+	else:
+		direction.x = rand_range(-1,0)
+	pass
+
+func _process(delta):
+	movement(delta)
+	directionPlayer = (Global.player.global_position - global_position).normalized()
+	rotation = directionPlayer.angle()
+	pass
+
+func movement(delta):
+	if moving:
+		direction.y = -400
+	else:
+		direction.y = - Global.camera.cameraSpeed
+		direction.x = 0
+	velocity.x = direction.x * speed
+	velocity.y = direction.y
+	translate(velocity * delta)
+	pass
+
+func _on_MovementTimer_timeout():
+	moving = false
+	$Turret.enabled = true
+	pass # replace with function body
+
+func get_firerate():
+	return firerate"
+_sections_unfolded = [ "Resource" ]
+
+[sub_resource type="CircleShape2D" id=2]
+
+custom_solver_bias = 0.0
+radius = 33.208
+
+[node name="TankEnemy" type="Area2D"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+script = SubResource( 1 )
+life = 4
+speed = 10
+damage = 2
+bullet = ExtResource( 1 )
+firerate = 2.0
+
+[node name="Sprite" type="Sprite" parent="." index="0"]
+
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
+
+shape = SubResource( 2 )
+
+[node name="Turret" parent="." index="2" instance=ExtResource( 3 )]
+
+bullet = ExtResource( 1 )
+fromEnemy = true
+
+[node name="MovementTimer" type="Timer" parent="." index="3"]
+
+process_mode = 1
+wait_time = 4.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="MovementTimer" to="." method="_on_MovementTimer_timeout"]
+
+
+[editable path="Turret"]

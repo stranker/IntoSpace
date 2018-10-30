@@ -11,3 +11,15 @@ func _ready():
 
 func take_damage(damage):
 	pass
+
+func get_damage():
+	return damage
+
+func get_life():
+	return life
+
+func get_speed():
+	return speed
+
+func is_alive():
+	return life > 0

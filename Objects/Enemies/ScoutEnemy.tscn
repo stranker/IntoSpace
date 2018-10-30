@@ -36,7 +36,7 @@ _sections_unfolded = [ "Resource" ]
 custom_solver_bias = 0.0
 radius = 35.8544
 
-[node name="ScoutEnemy" type="Area2D" index="0"]
+[node name="ScoutEnemy" type="Area2D"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )

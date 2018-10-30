@@ -8,14 +8,19 @@ resource_name = "Turret.gd"
 script/source = "extends Position2D
 
 export (PackedScene) var bullet
+export (bool) var fromEnemy
 var canShoot = true
 onready var damage = get_parent().get_damage()
-var firerate
+onready var firerate = get_parent().get_firerate()
 var enabled = false
 var direction = Vector2()
 
+
 func _ready():
-	direction = (global_position - get_parent().global_position).normalized()
+	if !fromEnemy:
+		direction = (global_position - get_parent().global_position).normalized()
+	else:
+		direction = (Global.player.global_position - global_position).normalized()
 	pass
 
 func set_damage(val):
@@ -27,8 +32,10 @@ func set_firerate(val):
 
 func _process(delta):
 	if enabled:
+		if firerate != get_parent().get_firerate():
+			firerate = get_parent().get_firerate()
+			$FireRate.wait_time = firerate
 		damage = get_parent().get_damage()
-		set_firerate(get_parent().firerate)
 		shoot()
 	pass
 
@@ -41,8 +48,7 @@ func shoot():
 		var b = bullet.instance()
 		get_tree().root.add_child(b)
 		b.global_position = global_position
-		b.set_damage(damage)
-		b.set_direction(direction)
+		b.shoot(damage,direction,fromEnemy)
 		canShoot = false
 		$FireRate.start()
 	pass
@@ -53,10 +59,11 @@ func _on_FireRate_timeout():
 "
 _sections_unfolded = [ "Resource" ]
 
-[node name="Turret" type="Position2D"]
+[node name="Turret" type="Position2D" index="0"]
 
 script = SubResource( 1 )
 bullet = ExtResource( 1 )
+fromEnemy = null
 
 [node name="FireRate" type="Timer" parent="." index="0"]
 
