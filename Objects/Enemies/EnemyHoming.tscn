@@ -12,6 +12,7 @@ var direction = Vector2()
 var velocity = Vector2()
 var directionToPlayer = Vector2()
 var distance = Vector2()
+var enabled = true
 const minDistance = 150
 
 func _ready():
@@ -24,10 +25,12 @@ func _process(delta):
 
 func movement(delta):
 	distance = Global.player.global_position - global_position
-	if distance.length() > minDistance:
+	if distance.length() > minDistance and enabled:
 		directionToPlayer = distance.normalized()
 		direction.x = directionToPlayer.x
 		velocity.x = direction.x * speed
+	else:
+		enabled = false
 	if global_position.y < Global.player.global_position.y:
 		rotation = directionToPlayer.angle()
 	translate(velocity * delta)
