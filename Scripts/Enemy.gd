@@ -3,13 +3,20 @@ extends Area2D
 export (int) var life = 0
 export (int) var speed = 0
 export (int) var damage = 0
+var alive
 var velocity = Vector2()
 var direction = Vector2()
 
 func _ready():
+	add_to_group("Enemy")
+	alive = true
 	pass
 
-func take_damage(damage):
+func take_damage(val):
+	if alive:
+		life -= val
+		if life <= 0:
+			alive = false
 	pass
 
 func get_damage():

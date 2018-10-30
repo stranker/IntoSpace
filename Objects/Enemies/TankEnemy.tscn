@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Objects/Interactables/EnemyBullet.tscn" type="PackedScene" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -44,14 +44,55 @@ func _on_MovementTimer_timeout():
 	$Turret.enabled = true
 	pass # replace with function body
 
+func take_damage(val):
+	.take_damage(val)
+	if !alive:
+		$Anim.play(\"Dead\")
+		$Turret.enabled = false
+	pass
+
 func get_firerate():
-	return firerate"
+	return firerate
+"
 _sections_unfolded = [ "Resource" ]
 
 [sub_resource type="CircleShape2D" id=2]
 
 custom_solver_bias = 0.0
 radius = 33.208
+
+[sub_resource type="Animation" id=3]
+
+resource_name = "Dead"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
 
 [node name="TankEnemy" type="Area2D"]
 
@@ -67,11 +108,12 @@ life = 4
 speed = 10
 damage = 2
 bullet = ExtResource( 1 )
-firerate = 2.0
+firerate = 4.0
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
 texture = ExtResource( 2 )
+_sections_unfolded = [ "Visibility" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
@@ -88,6 +130,16 @@ process_mode = 1
 wait_time = 4.0
 one_shot = true
 autostart = true
+
+[node name="Anim" type="AnimationPlayer" parent="." index="4"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/Dead = SubResource( 3 )
+blend_times = [  ]
 
 [connection signal="timeout" from="MovementTimer" to="." method="_on_MovementTimer_timeout"]
 

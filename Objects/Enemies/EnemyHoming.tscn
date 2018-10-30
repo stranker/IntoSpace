@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Sprites/HomingMissile.png" type="Texture" id=1]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Area2D
+
+var speed = 300
+var direction = Vector2()
+var velocity = Vector2()
+var directionToPlayer = Vector2()
+var distance = Vector2()
+const minDistance = 150
+
+func _ready():
+	velocity.y = -100
+	pass
+
+func _process(delta):
+	movement(delta)
+	pass
+
+func movement(delta):
+	distance = Global.player.global_position - global_position
+	if distance.length() > minDistance:
+		directionToPlayer = distance.normalized()
+		direction.x = directionToPlayer.x
+		velocity.x = direction.x * speed
+	if global_position.y < Global.player.global_position.y:
+		rotation = directionToPlayer.angle()
+	translate(velocity * delta)
+	pass"
+
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 6.37975, 23.3573 )
+
+[node name="EnemyHoming" type="Area2D"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+script = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="." index="0"]
+
+texture = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
+
+rotation = 1.5708
+scale = Vector2( 1.61717, 1 )
+shape = SubResource( 2 )
+_sections_unfolded = [ "Transform" ]
+
+

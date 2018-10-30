@@ -16,13 +16,6 @@ var enabled = false
 var direction = Vector2()
 
 
-func _ready():
-	if !fromEnemy:
-		direction = (global_position - get_parent().global_position).normalized()
-	else:
-		direction = (Global.player.global_position - global_position).normalized()
-	pass
-
 func set_damage(val):
 	damage = val
 
@@ -32,6 +25,7 @@ func set_firerate(val):
 
 func _process(delta):
 	if enabled:
+		set_direction()
 		if firerate != get_parent().get_firerate():
 			firerate = get_parent().get_firerate()
 			$FireRate.wait_time = firerate
@@ -53,13 +47,20 @@ func shoot():
 		$FireRate.start()
 	pass
 
+func set_direction():
+	if !fromEnemy:
+		direction = (global_position - get_parent().global_position).normalized()
+	else:
+		direction = (Global.player.global_position - global_position).normalized()
+	pass
+
 func _on_FireRate_timeout():
 	canShoot = true
 	pass # replace with function body
 "
 _sections_unfolded = [ "Resource" ]
 
-[node name="Turret" type="Position2D" index="0"]
+[node name="Turret" type="Position2D"]
 
 script = SubResource( 1 )
 bullet = ExtResource( 1 )

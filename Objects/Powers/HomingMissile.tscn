@@ -15,7 +15,6 @@ var velocity = Vector2()
 var acceleration = Vector2()
 var direction = Vector2()
 var steer
-var fromEnemy = false
 
 func _ready():
 	direction.x = rand_range(-0.5,0.5)
@@ -35,12 +34,8 @@ func _process(delta):
 	pass
 
 func _on_DetectionArea_area_entered(area):
-	if !fromEnemy:
-		if area.is_in_group(\"Enemy\") and !enemyTarget:
-			enemyTarget = area
-	else:
-		if area.is_in_group(\"Player\") and !enemyTarget:
-			enemyTarget = area
+	if area.is_in_group(\"Enemy\") and !enemyTarget:
+		enemyTarget = area
 	pass # replace with function body
 
 
@@ -50,21 +45,15 @@ func seek_enemy():
 	return steer
 
 func _on_HoverMissile_area_entered(area):
-	if !fromEnemy:
-		if area.is_in_group(\"Enemy\") and area.alive:
-			area.take_damage(damage)
-			queue_free()
-	else:
-		if area.is_in_group(\"Player\") and area.alive:
-			area.take_damage(damage)
-			queue_free()
+	if area.is_in_group(\"Enemy\") and area.alive:
+		area.take_damage(damage)
+		queue_free()
 	pass # replace with function body
 
 
 func _on_DetectionArea_area_exited(area):
-	if !fromEnemy:
-		if area.is_in_group(\"Enemy\") and enemyTarget == area:
-			enemyTarget = null
+	if area.is_in_group(\"Enemy\") and enemyTarget == area:
+		enemyTarget = null
 	pass # replace with function body
 
 

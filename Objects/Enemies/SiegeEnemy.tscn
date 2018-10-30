@@ -1,46 +1,47 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://Objects/Powers/HomingShooter.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Objects/Enemies/EnemyHoming.tscn" type="PackedScene" id=3]
 
 [sub_resource type="GDScript" id=1]
 
-resource_name = "ScoutEnemy.gd"
+resource_name = "SiegeEnemy.gd"
 script/source = "extends \"res://Scripts/Enemy.gd\"
 
+const minDistance = 250
+
 func _ready():
-	velocity.y = -200
+	$HomingShooter.enabled = true
+	velocity.y = -speed
 	pass
 
 func _process(delta):
 	movement(delta)
+	shoot_controller()
+	pass
+
+func shoot_controller():
+	if global_position.y > Global.player.global_position.y - minDistance:
+		$HomingShooter.enabled = false
 	pass
 
 func movement(delta):
-	direction.x = (Global.player.global_position - global_position).normalized().x
-	velocity.x = direction.x * speed
 	translate(velocity * delta)
 	pass
-
-func _on_DeathTimer_timeout():
-	queue_free()
-	pass # replace with function body
 
 func take_damage(val):
 	.take_damage(val)
 	if !alive:
 		$Anim.play(\"Dead\")
-	pass
-
-func _on_VisibilityNotifier2D_screen_exited():
-	queue_free()
-	pass # replace with function body
-"
+		$HomingShooter.enabled = false
+	pass"
 _sections_unfolded = [ "Resource" ]
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
-radius = 35.8544
+extents = Vector2( 19.286, 264.203 )
 
 [sub_resource type="Animation" id=3]
 
@@ -75,7 +76,7 @@ tracks/1/keys = {
 } ]
 }
 
-[node name="ScoutEnemy" type="Area2D"]
+[node name="SiegeEnemy" type="Area2D" index="0"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -85,31 +86,34 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 script = SubResource( 1 )
-life = 2
-speed = 100
-damage = 2
+life = 3
+speed = 400
+damage = 3
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
+position = Vector2( -0.598724, -0.118692 )
+scale = Vector2( 0.672055, 1.22216 )
 texture = ExtResource( 1 )
-_sections_unfolded = [ "Visibility" ]
+_sections_unfolded = [ "Transform", "Visibility" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
+position = Vector2( 0.540344, -0.354233 )
+scale = Vector2( 1, 0.15173 )
 shape = SubResource( 2 )
 
-[node name="DeathTimer" type="Timer" parent="." index="2"]
+[node name="HomingShooter" parent="." index="2" instance=ExtResource( 2 )]
 
-process_mode = 1
-wait_time = 15.0
-one_shot = false
-autostart = true
+position = Vector2( 0, 89.9993 )
+homingMissile = ExtResource( 3 )
+fromEnemy = true
 
-[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="." index="3"]
+[node name="HoverShoot" parent="HomingShooter" index="0"]
 
-rect = Rect2( -10, -10, 20, 20 )
+wait_time = 3.0
 
-[node name="Anim" type="AnimationPlayer" parent="." index="4"]
+[node name="Anim" type="AnimationPlayer" parent="." index="3"]
 
 root_node = NodePath("..")
 autoplay = ""
@@ -119,8 +123,5 @@ playback_speed = 1.0
 anims/Dead = SubResource( 3 )
 blend_times = [  ]
 
-[connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]
 
-[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
-
-
+[editable path="HomingShooter"]

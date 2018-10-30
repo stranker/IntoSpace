@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Objects/Interactables/Bullet.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/Spacehip.png" type="Texture" id=2]
@@ -13,18 +13,24 @@
 resource_name = "Spaceship.gd"
 script/source = "extends Area2D
 
+export (int) var life
 var direction = Vector2(0,-1)
 var offsetPos = Vector2()
 export (PackedScene) var bullet
 var moving = false
 var sizeSprite
 var dragging = false
+var alive
 
 func _ready():
-	sizeSprite = $Sprite.texture.get_size() * $Sprite.scale
+	initialize()
+	pass
+
+func initialize():
 	Global.player = self
+	sizeSprite = $Sprite.texture.get_size() * $Sprite.scale
 	add_to_group(\"Player\")
-	$Laser.enabled = false
+	alive = true
 	pass
 
 func _process(delta):
@@ -91,13 +97,25 @@ func set_shoot_controller():
 		$ShootController.set_active(false)
 
 func increment_magnet():
-	$MagnetArea.increment_magnet()"
+	$MagnetArea.increment_magnet()
+
+func take_damage(val):
+	life -= val
+	if life <= 0:
+		$Anim.play(\"Dead\")"
 _sections_unfolded = [ "Resource" ]
 
 [sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
 extents = Vector2( 3.46228, 2.66228 )
+
+[sub_resource type="Animation" id=3]
+
+resource_name = "Dead"
+length = 1.0
+loop = false
+step = 0.1
 
 [node name="SpaceShip" type="Area2D"]
 
@@ -111,6 +129,7 @@ audio_bus_override = false
 audio_bus_name = "Master"
 script = SubResource( 1 )
 _sections_unfolded = [ "Collision", "Transform" ]
+life = 10
 bullet = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
@@ -148,5 +167,15 @@ position = Vector2( 0, -22.283 )
 show_behind_parent = true
 position = Vector2( 0.970612, 15.2059 )
 _sections_unfolded = [ "Visibility" ]
+
+[node name="Anim" type="AnimationPlayer" parent="." index="7"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/Dead = SubResource( 3 )
+blend_times = [  ]
 
 
