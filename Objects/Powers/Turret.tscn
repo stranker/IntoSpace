@@ -10,10 +10,13 @@ script/source = "extends Position2D
 export (PackedScene) var bullet
 export (bool) var fromEnemy
 var canShoot = true
-onready var damage = get_parent().get_damage()
+onready var damage = 1
 onready var firerate = get_parent().get_firerate()
 var enabled = false
 var direction = Vector2()
+var id_upgrade = 2
+onready var upgrade = Global.get_upgrade_by_id(id_upgrade)
+var level = 1
 
 
 func set_damage(val):
@@ -25,11 +28,14 @@ func set_firerate(val):
 
 func _process(delta):
 	if enabled:
+		if !fromEnemy:
+			if level != upgrade[\"level\"]:
+				level = upgrade[\"level\"]
+				damage = level * 2
 		set_direction()
 		if firerate != get_parent().get_firerate():
 			firerate = get_parent().get_firerate()
 			$FireRate.wait_time = firerate
-		damage = get_parent().get_damage()
 		shoot()
 	pass
 
@@ -60,7 +66,7 @@ func _on_FireRate_timeout():
 "
 _sections_unfolded = [ "Resource" ]
 
-[node name="Turret" type="Position2D"]
+[node name="Turret" type="Position2D" index="0"]
 
 script = SubResource( 1 )
 bullet = ExtResource( 1 )

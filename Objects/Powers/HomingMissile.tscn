@@ -7,7 +7,7 @@
 resource_name = "HomingMissile.gd"
 script/source = "extends Area2D
 
-export (int) var damage = 10
+export (int) var damage = 1
 export (int) var speed = 800
 export (float) var steerForce = 0
 var enemyTarget = null
@@ -15,6 +15,8 @@ var velocity = Vector2()
 var acceleration = Vector2()
 var direction = Vector2()
 var steer
+onready var upgrade = Global.get_upgrade_by_id(id_upgrade)
+var id_upgrade = 4
 
 func _ready():
 	direction.x = rand_range(-0.5,0.5)
@@ -22,6 +24,11 @@ func _ready():
 	direction = direction.normalized()
 	velocity = direction * speed
 	rotation = velocity.angle()
+	calculate_damage()
+	pass
+
+func calculate_damage():
+	damage += upgrade[\"level\"] * 2
 	pass
 
 func _process(delta):
@@ -68,7 +75,7 @@ _sections_unfolded = [ "Resource" ]
 custom_solver_bias = 0.0
 extents = Vector2( 24.3899, 15.2511 )
 
-[node name="HomingMissile" type="Area2D"]
+[node name="HomingMissile" type="Area2D" index="0"]
 
 position = Vector2( 0.183792, 2.80744 )
 input_pickable = true
@@ -80,7 +87,7 @@ audio_bus_override = false
 audio_bus_name = "Master"
 script = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
-damage = 10
+damage = 1
 speed = 800
 steerForce = 40.0
 

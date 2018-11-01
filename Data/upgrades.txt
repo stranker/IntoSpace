@@ -1,0 +1,7 @@
+{"Upgrades":[
+{"id":0,"name":"life","price":500,"texture":"res://icon.png","level":1,"max_level":10},{"id":1,"name":"shield","price":1000,"texture":"res://icon.png","level":1,"max_level":10},
+{"id":2,"name":"damage","price":1200,"texture":"res://icon.png","level":1,"max_level":10},
+{"id":3,"name":"shoots","price":2000,"texture":"res://icon.png","level":1,"max_level":4},
+{"id":4,"name":"homingMissile","price":4500,"texture":"res://icon.png","level":1,"max_level":10},
+{"id":5,"name":"magnetArea","price":1000,"texture":"res://icon.png","level":1,"max_level":15}
+]}

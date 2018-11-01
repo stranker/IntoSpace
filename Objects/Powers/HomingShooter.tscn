@@ -12,6 +12,7 @@ export (bool) var fromEnemy
 var canShoot = true
 var enabled = false
 
+
 func _process(delta):
 	if enabled:
 		shoot()

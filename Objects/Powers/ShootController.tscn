@@ -7,19 +7,16 @@
 resource_name = "ShootController.gd"
 script/source = "extends Node2D
 
-var powerLevel = 1
 export (float) var firerate = 0.6
-export (int) var damage = 1
 var enabled = false
+var id_upgrade = 3
+onready var upgrade = Global.get_upgrade_by_id(id_upgrade)
+onready var level = upgrade[\"level\"]
 
 func _ready():
 	initialize_turrets()
-	if enabled:
-		enable_turrets()
+	activate_turrets(level)
 	pass
-
-func add_damage():
-	damage += 1
 
 func set_active(val):
 	enabled = val
@@ -34,27 +31,25 @@ func initialize_turrets():
 func _input(event):
 	if event is InputEventScreenTouch:
 		if event.pressed:
-			firerate -= 0.05
+			firerate -= 0.025
 			syncronize_turrets()
 			if firerate <= 0.2:
 				firerate = 0.2
 			$Timer.start()
 	pass
 
-func enable_turrets(val):
-	match powerLevel:
-		1:
-			$Turret.enabled = val
-		2:
-			$Turret.enabled = val
-			$Turret2.enabled = val
-			$Turret3.enabled = val
-		3:
-			$Turret.enabled = val
-			$Turret2.enabled = val
-			$Turret3.enabled = val
-			$Turret4.enabled = val
-			$Turret5.enabled = val
+func _process(delta):
+	if level != upgrade[\"level\"]:
+		level = upgrade[\"level\"]
+		activate_turrets(level + 1)
+	pass
+
+func activate_turrets(topeTurret):
+	var cont = 0
+	for i in get_childrens():
+		if cont < topeTurret and i.name.find(\"Turret\") > 0:
+			i.enabled = true
+			cont += 1
 	pass
 
 func get_damage():
@@ -80,7 +75,10 @@ func syncronize_turrets():
 func set_firerate(val):
 	firerate = val
 	for i in get_children():
-		i.set_firerate(firerate)
+		if i.name.find(\"Turret\")>0:
+			i.set_firerate(firerate)
+			i.reset_timer()
+	pass
 
 func _on_Timer_timeout():
 	firerate = 0.6
@@ -88,40 +86,49 @@ func _on_Timer_timeout():
 "
 _sections_unfolded = [ "Resource" ]
 
-[node name="ShootController" type="Node2D"]
+[node name="ShootController" type="Node2D" index="0"]
 
 show_behind_parent = true
 script = SubResource( 1 )
 _sections_unfolded = [ "Visibility" ]
 firerate = 0.6
-damage = 1
 
 [node name="Turret" parent="." index="0" instance=ExtResource( 1 )]
 
-position = Vector2( 0, -20 )
+position = Vector2( 0, -19 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Turret2" parent="." index="1" instance=ExtResource( 1 )]
 
-position = Vector2( 2, -18 )
+position = Vector2( 1, -18 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Turret3" parent="." index="2" instance=ExtResource( 1 )]
 
-position = Vector2( -2, -18 )
+position = Vector2( -1, -18 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Turret4" parent="." index="3" instance=ExtResource( 1 )]
 
-position = Vector2( -3, -17 )
+position = Vector2( -2, -17 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Turret5" parent="." index="4" instance=ExtResource( 1 )]
 
-position = Vector2( 3, -17 )
+position = Vector2( 2, -17 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Timer" type="Timer" parent="." index="5"]
+[node name="Turret6" parent="." index="5" instance=ExtResource( 1 )]
+
+position = Vector2( -3, -16 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Turret7" parent="." index="6" instance=ExtResource( 1 )]
+
+position = Vector2( 3, -16 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Timer" type="Timer" parent="." index="7"]
 
 process_mode = 1
 wait_time = 0.7

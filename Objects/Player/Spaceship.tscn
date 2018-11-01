@@ -124,7 +124,7 @@ length = 1.0
 loop = false
 step = 0.1
 
-[node name="SpaceShip" type="Area2D" index="0"]
+[node name="SpaceShip" type="Area2D"]
 
 position = Vector2( 323.858, 1045.6 )
 input_pickable = true
