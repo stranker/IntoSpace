@@ -2,12 +2,14 @@ extends Node
 
 var camera = null
 var player = null
-var coins = 9999999
+var coins = 0
 var points = 0
 var UI = null
 var upgrades = []
+var upgradePanel
 
 func _ready():
+	new_game()
 	pass
 
 func get_upgrade_by_id(id):
@@ -16,4 +18,6 @@ func get_upgrade_by_id(id):
 		if i["id"] == id:
 			upgrade = i
 	return upgrade
-	
+
+func new_game():
+	points = 0

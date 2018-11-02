@@ -14,13 +14,19 @@ var directionToPlayer = Vector2()
 var distance = Vector2()
 var enabled = true
 const minDistance = 150
+var damage = 0
+
+func set_damage(val):
+	damage = val
+	pass
 
 func _ready():
 	velocity.y = -100
 	pass
 
 func _process(delta):
-	movement(delta)
+	if Global.player:
+		movement(delta)
 	pass
 
 func movement(delta):
@@ -34,7 +40,14 @@ func movement(delta):
 	if global_position.y < Global.player.global_position.y:
 		rotation = directionToPlayer.angle()
 	translate(velocity * delta)
-	pass"
+	pass
+
+func _on_EnemyHoming_area_entered(area):
+	if area.is_in_group(\"Player\"):
+		area.take_damage(damage)
+		queue_free()
+	pass # replace with function body
+"
 _sections_unfolded = [ "Resource" ]
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -42,7 +55,7 @@ _sections_unfolded = [ "Resource" ]
 custom_solver_bias = 0.0
 extents = Vector2( 6.37975, 23.3573 )
 
-[node name="EnemyHoming" type="Area2D" index="0"]
+[node name="EnemyHoming" type="Area2D"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -64,5 +77,7 @@ rotation = 1.5708
 scale = Vector2( 1.61717, 1 )
 shape = SubResource( 2 )
 _sections_unfolded = [ "Transform" ]
+
+[connection signal="area_entered" from="." to="." method="_on_EnemyHoming_area_entered"]
 
 

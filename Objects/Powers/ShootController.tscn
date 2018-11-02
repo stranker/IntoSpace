@@ -11,71 +11,70 @@ export (float) var firerate = 0.6
 var enabled = false
 var id_upgrade = 3
 onready var upgrade = Global.get_upgrade_by_id(id_upgrade)
-onready var level = upgrade[\"level\"]
+var level = 1
 
 func _ready():
 	initialize_turrets()
+	level = upgrade[\"level\"]
 	activate_turrets(level)
 	pass
 
 func set_active(val):
 	enabled = val
-	enable_turrets(val)
+	if enabled:
+		activate_turrets(level)
+	pass
 
 func initialize_turrets():
 	for i in get_children():
-		if i.name.find(\"Turret\")>0:
+		if i.name.find(\"Turret\") >= 0:
 			i.enabled = false
+	pass
+
+func upgrade():
+	upgrade[\"level\"] += 1
 	pass
 
 func _input(event):
 	if event is InputEventScreenTouch:
 		if event.pressed:
 			firerate -= 0.025
-			syncronize_turrets()
-			if firerate <= 0.2:
-				firerate = 0.2
+			if firerate <= 0.3:
+				firerate = 0.3
 			$Timer.start()
 	pass
 
 func _process(delta):
-	if level != upgrade[\"level\"]:
-		level = upgrade[\"level\"]
-		activate_turrets(level + 1)
+	if enabled:
+		if level != upgrade[\"level\"]:
+			level = upgrade[\"level\"]
+			activate_turrets(level + 1)
+			syncronize_turrets()
 	pass
 
 func activate_turrets(topeTurret):
 	var cont = 0
-	for i in get_childrens():
-		if cont < topeTurret and i.name.find(\"Turret\") > 0:
-			i.enabled = true
-			cont += 1
+	for i in get_children():
+		if i.name.find(\"Turret\") >= 0:
+			if cont < topeTurret:
+				i.enabled = true
+				cont += 1
 	pass
-
-func get_damage():
-	return damage
 
 func get_firerate():
 	return firerate
 
-func add_turrets():
-	powerLevel += 1
-	if powerLevel > 3:
-		powerLevel = 3
-	enable_turrets(true)
-	syncronize_turrets()
-	pass
 
 func syncronize_turrets():
 	for i in get_children():
-		if i.name.find(\"Turret\")>0:
+		if i.name.find(\"Turret\")>=0:
 			i.reset_timer()
 	pass
 
 func set_firerate(val):
 	firerate = val
 	for i in get_children():
-		if i.name.find(\"Turret\")>0:
+		if i.name.find(\"Turret\")>=0:
 			i.set_firerate(firerate)
 			i.reset_timer()
 	pass
@@ -86,14 +85,14 @@ func _on_Timer_timeout():
 "
 _sections_unfolded = [ "Resource" ]
 
-[node name="ShootController" type="Node2D" index="0"]
+[node name="ShootController" type="Node2D"]
 
 show_behind_parent = true
 script = SubResource( 1 )
 _sections_unfolded = [ "Visibility" ]
 firerate = 0.6
 
-[node name="Turret" parent="." index="0" instance=ExtResource( 1 )]
+[node name="Turret1" parent="." index="0" instance=ExtResource( 1 )]
 
 position = Vector2( 0, -19 )
 _sections_unfolded = [ "Transform" ]

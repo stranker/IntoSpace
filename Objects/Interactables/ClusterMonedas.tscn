@@ -9,7 +9,7 @@ script/source = "extends Node2D
 
 onready var clusterList = get_children()
 var timer = 0
-var deathTime = 7
+var deathTime = 8
 var cluster
 
 func _ready():
@@ -121,5 +121,22 @@ position = Vector2( 0, -40 )
 [node name="Moneda4" parent="Cluster3" index="5" instance=ExtResource( 1 )]
 
 position = Vector2( 60, -40 )
+
+[node name="Cluster4" type="Node2D" parent="." index="3"]
+
+editor/display_folded = true
+visible = false
+
+[node name="Moneda" parent="Cluster4" index="0" instance=ExtResource( 1 )]
+
+position = Vector2( -1.79623, 69.3381 )
+
+[node name="Moneda6" parent="Cluster4" index="1" instance=ExtResource( 1 )]
+
+position = Vector2( -0.126282, -59.7583 )
+
+[node name="Moneda5" parent="Cluster4" index="2" instance=ExtResource( 1 )]
+
+position = Vector2( -1.73306, 2.99368 )
 
 

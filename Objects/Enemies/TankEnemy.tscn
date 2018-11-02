@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Objects/Interactables/EnemyBullet.tscn" type="PackedScene" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Player/SS_2.png" type="Texture" id=2]
 [ext_resource path="res://Objects/Powers/Turret.tscn" type="PackedScene" id=3]
 
 [sub_resource type="GDScript" id=1]
@@ -59,7 +59,7 @@ _sections_unfolded = [ "Resource" ]
 [sub_resource type="CircleShape2D" id=2]
 
 custom_solver_bias = 0.0
-radius = 33.208
+radius = 47.805
 
 [sub_resource type="Animation" id=3]
 
@@ -94,7 +94,7 @@ tracks/1/keys = {
 } ]
 }
 
-[node name="TankEnemy" type="Area2D"]
+[node name="TankEnemy" type="Area2D" index="0"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -107,11 +107,14 @@ script = SubResource( 1 )
 life = 4
 speed = 10
 damage = 2
+points = 500
 bullet = ExtResource( 1 )
 firerate = 4.0
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
+position = Vector2( 0.189238, 0.189236 )
+scale = Vector2( 0.621531, 0.621531 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Visibility" ]
 

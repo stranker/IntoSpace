@@ -11,10 +11,11 @@ export (PackedScene) var homingMissile
 export (bool) var fromEnemy
 var canShoot = true
 var enabled = false
-
+var damage
 
 func _process(delta):
 	if enabled:
+		damage = get_parent().damage
 		shoot()
 	pass
 
@@ -23,6 +24,7 @@ func shoot():
 		canShoot = false
 		var hm = homingMissile.instance()
 		get_tree().root.call_deferred(\"add_child\",hm)
+		hm.set_damage(damage)
 		hm.global_position = $Pos.global_position
 		$HoverShoot.start()
 	pass

@@ -4,12 +4,21 @@ export (PackedScene) var itemPanel
 var upgradesDictionary = {}
 
 func _ready():
+	Global.upgradePanel = self
 	load_upgrade_items()
 	create_upgrade_items()
+	set_active(false)
 	pass
 
+func set_active(val):
+	if val:
+		$MC.show()
+	else:
+		$MC.hide()
+
 func _on_ClosePanel_button_down():
-	$MC/Panel.hide()
+	set_active(false)
+	get_tree().paused = false
 	pass # replace with function body
 
 func create_item_panel(upgradeItem):

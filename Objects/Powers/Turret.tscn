@@ -66,7 +66,7 @@ func _on_FireRate_timeout():
 "
 _sections_unfolded = [ "Resource" ]
 
-[node name="Turret" type="Position2D" index="0"]
+[node name="Turret" type="Position2D"]
 
 script = SubResource( 1 )
 bullet = ExtResource( 1 )

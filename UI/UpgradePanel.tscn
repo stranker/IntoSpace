@@ -1,7 +1,28 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://UI/UpgradePanel.gd" type="Script" id=1]
 [ext_resource path="res://UI/UpgradeItemPanel.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Sprites/Upgrade/Panel_1.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Upgrade/Button_X.png" type="Texture" id=4]
+
+[sub_resource type="StyleBoxTexture" id=1]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 957, 1580 )
+margin_left = 0.0
+margin_right = 0.0
+margin_top = 0.0
+margin_bottom = 0.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
 
 [node name="UpgradePanel" type="CanvasLayer"]
 
@@ -15,6 +36,7 @@ itemPanel = ExtResource( 2 )
 
 [node name="MC" type="MarginContainer" parent="." index="0"]
 
+pause_mode = 2
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -29,6 +51,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
+_sections_unfolded = [ "Pause" ]
 
 [node name="Panel" type="Panel" parent="MC" index="0"]
 
@@ -45,6 +68,8 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
+custom_styles/panel = SubResource( 1 )
+_sections_unfolded = [ "custom_styles" ]
 
 [node name="MC" type="MarginContainer" parent="MC/Panel" index="0"]
 
@@ -83,16 +108,16 @@ custom_constants/vseparation = 50
 columns = 1
 _sections_unfolded = [ "custom_constants" ]
 
-[node name="ClosePanel" type="Button" parent="MC/Panel" index="1"]
+[node name="ClosePanel" type="TextureButton" parent="MC/Panel" index="1"]
 
 anchor_left = 1.0
 anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 0.0
-margin_left = -55.0
-margin_top = -29.0
-margin_right = 28.0
-margin_bottom = 49.0
+margin_left = -74.0
+margin_top = -27.0
+margin_right = 9.0
+margin_bottom = 51.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -104,9 +129,9 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "X"
-flat = false
-align = 1
+texture_normal = ExtResource( 4 )
+expand = true
+_sections_unfolded = [ "Textures" ]
 
 [connection signal="button_down" from="MC/Panel/ClosePanel" to="." method="_on_ClosePanel_button_down"]
 
