@@ -11,7 +11,7 @@
 [ext_resource path="res://Sound/Make it snow.wav" type="AudioStream" id=9]
 [ext_resource path="res://Sound/Accept (Menu) maybe better.wav" type="AudioStream" id=10]
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=1]
 
 script/source = "extends Control
 
@@ -37,7 +37,7 @@ func _on_Play_button_down():
 	pass # replace with function body
 "
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="SpriteFrames" id=2]
 
 animations = [ {
 "frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ],
@@ -58,7 +58,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-script = SubResource( 2 )
+script = SubResource( 1 )
 
 [node name="Play" type="Container" parent="." index="0"]
 
@@ -140,7 +140,7 @@ _sections_unfolded = [ "Textures" ]
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Play/Play" index="0"]
 
 position = Vector2( 60, 80 )
-frames = SubResource( 1 )
+frames = SubResource( 2 )
 animation = "default"
 frame = 2
 playing = true
