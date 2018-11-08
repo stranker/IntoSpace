@@ -1,7 +1,9 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Sprites/Bullet_1.png" type="Texture" id=1]
-[ext_resource path="res://Sprites/BulletParticles.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Bullet_2.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Bullet_3.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/BulletParticles.png" type="Texture" id=4]
 
 [sub_resource type="GDScript" id=1]
 
@@ -62,74 +64,19 @@ func bullet_impact(area):
 	pass"
 _sections_unfolded = [ "Resource" ]
 
+[sub_resource type="SpriteFrames" id=12]
+
+animations = [ {
+"frames": [ ExtResource( 1 ), ExtResource( 2 ), ExtResource( 3 ) ],
+"loop": false,
+"name": "default",
+"speed": 2.0
+} ]
+
 [sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
 extents = Vector2( 9.77415, 17.7575 )
-
-[sub_resource type="Gradient" id=3]
-
-offsets = PoolRealArray( 0, 1 )
-colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
-
-[sub_resource type="GradientTexture" id=4]
-
-flags = 4
-gradient = SubResource( 3 )
-width = 2048
-
-[sub_resource type="Curve" id=5]
-
-min_value = 0.0
-max_value = 1.0
-bake_resolution = 100
-_data = [ Vector2( 0, 0.800781 ), 0.0, -1.03308, 0, 0, Vector2( 1, 0.338867 ), -0.389926, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=6]
-
-flags = 4
-width = 2048
-curve = SubResource( 5 )
-
-[sub_resource type="ParticlesMaterial" id=7]
-
-render_priority = 0
-trail_divisor = 1
-emission_shape = 0
-flag_align_y = false
-flag_rotate_y = false
-flag_disable_z = true
-spread = 20.0
-flatness = 0.0
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 40.0
-initial_velocity_random = 0.0
-angular_velocity = 0.0
-angular_velocity_random = 0.0
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-linear_accel = 50.0
-linear_accel_random = 0.0
-radial_accel = 0.0
-radial_accel_random = 0.0
-tangential_accel = 0.0
-tangential_accel_random = 0.0
-damping = 0.0
-damping_random = 0.0
-angle = 0.0
-angle_random = 0.0
-scale = 0.5
-scale_random = 0.0
-scale_curve = SubResource( 6 )
-color_ramp = SubResource( 4 )
-hue_variation = 0.0
-hue_variation_random = 0.0
-anim_speed = 0.0
-anim_speed_random = 0.0
-anim_offset = 0.0
-anim_offset_random = 0.0
-anim_loop = false
-_sections_unfolded = [ "Color", "Gravity", "Initial Velocity", "Linear Accel", "Scale", "Spread" ]
 
 [sub_resource type="Curve" id=8]
 
@@ -191,7 +138,7 @@ length = 1.5
 loop = false
 step = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath(":visible")
+tracks/0/path = NodePath("Impact:emitting")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -200,10 +147,10 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ false ]
+"values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Trail:emitting")
+tracks/1/path = NodePath("Sprite:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -214,25 +161,13 @@ tracks/1/keys = {
 "update": 1,
 "values": [ false ]
 }
-tracks/2/type = "value"
-tracks/2/path = NodePath("Impact:emitting")
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/3/type = "method"
-tracks/3/path = NodePath(".")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
 "times": PoolRealArray( 1.5 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
@@ -255,11 +190,12 @@ script = SubResource( 1 )
 _sections_unfolded = [ "Visibility" ]
 speed = 1300
 
-[node name="Sprite" type="Sprite" parent="." index="0"]
+[node name="Sprite" type="AnimatedSprite" parent="." index="0"]
 
 position = Vector2( 0.691406, 0.691406 )
 scale = Vector2( 0.617188, 0.617188 )
-texture = ExtResource( 1 )
+frames = SubResource( 12 )
+animation = "default"
 _sections_unfolded = [ "Visibility" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
@@ -270,32 +206,7 @@ shape = SubResource( 2 )
 
 rect = Rect2( -10, -10, 20, 20 )
 
-[node name="Trail" type="Particles2D" parent="." index="3"]
-
-show_behind_parent = true
-position = Vector2( -0.247902, 19.89 )
-rotation = 1.5708
-emitting = true
-amount = 10
-lifetime = 1.0
-one_shot = false
-preprocess = 0.5
-speed_scale = 1.0
-explosiveness = 0.0
-randomness = 1.0
-fixed_fps = 0
-fract_delta = true
-visibility_rect = Rect2( -100, -100, 200, 200 )
-local_coords = true
-draw_order = 1
-process_material = SubResource( 7 )
-texture = ExtResource( 1 )
-normal_map = null
-h_frames = 1
-v_frames = 1
-_sections_unfolded = [ "Drawing", "Process Material", "Textures", "Time", "Transform", "Visibility" ]
-
-[node name="Impact" type="Particles2D" parent="." index="4"]
+[node name="Impact" type="Particles2D" parent="." index="3"]
 
 emitting = false
 amount = 10
@@ -311,13 +222,13 @@ visibility_rect = Rect2( -100, -100, 200, 200 )
 local_coords = false
 draw_order = 0
 process_material = SubResource( 10 )
-texture = ExtResource( 2 )
+texture = ExtResource( 4 )
 normal_map = null
 h_frames = 1
 v_frames = 1
 _sections_unfolded = [ "Drawing", "Process Material", "Textures", "Time", "Transform" ]
 
-[node name="Anim" type="AnimationPlayer" parent="." index="5"]
+[node name="Anim" type="AnimationPlayer" parent="." index="4"]
 
 root_node = NodePath("..")
 autoplay = ""

@@ -2,7 +2,7 @@
 
 [sub_resource type="GDScript" id=1]
 
-resource_name = "AsteroidSpawner.gd"
+resource_name = "Spawner.gd"
 script/source = "extends Position2D
 
 export (PackedScene) var object
@@ -33,7 +33,10 @@ func _on_Timer_timeout():
 		a = objectList[rand_range(0,objectList.size())].instance()
 	else:
 		a = object.instance()
-	get_tree().root.call_deferred(\"add_child\",a)
+	if a.is_in_group(\"Enemy\"):
+		Global.enemiesParent.call_deferred(\"add_child\",a)
+	elif a.is_in_group(\"ClusterCoins\"):
+		Global.coinsParent.call_deferred(\"add_child\",a)
 	a.global_position = global_position
 	new_time()
 	pass # replace with function body

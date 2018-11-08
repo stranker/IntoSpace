@@ -13,6 +13,7 @@
 
 [sub_resource type="GDScript" id=1]
 
+resource_name = "MainMenu.gd"
 script/source = "extends Control
 
 func _ready():
@@ -36,6 +37,7 @@ func _on_Play_button_down():
 	get_tree().change_scene(\"res://Scenes/GameScene.tscn\")
 	pass # replace with function body
 "
+_sections_unfolded = [ "Resource" ]
 
 [sub_resource type="SpriteFrames" id=2]
 
@@ -46,7 +48,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0

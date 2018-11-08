@@ -6,19 +6,12 @@
 [sub_resource type="GDScript" id=1]
 
 resource_name = "Asteroide.gd"
-script/source = "extends Area2D
+script/source = "extends \"res://Scripts/Enemy.gd\"
 
-var direction = Vector2(0,-1)
-var speed = 100
-var life = 2
-var alive = true
 var initialRotation
-var points = 100
-var damage = 1
 
 func _ready():
 	randomize()
-	add_to_group(\"Enemy\")
 	calculate_direction()
 	initialRotation = rand_range(-1,1)
 	pass
@@ -223,6 +216,10 @@ audio_bus_override = false
 audio_bus_name = "Master"
 script = SubResource( 1 )
 _sections_unfolded = [ "Collision" ]
+life = 2
+speed = 200
+damage = 1
+points = 200
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 

@@ -11,6 +11,7 @@ export (int) var damage = 1
 export (int) var speed = 800
 export (float) var steerForce = 0
 var enemyTarget = null
+var fromEnemy = false
 var velocity = Vector2()
 var acceleration = Vector2()
 var direction = Vector2()
@@ -27,8 +28,14 @@ func _ready():
 	calculate_damage()
 	pass
 
+func shoot(_damage,fEnemy):
+	damage = _damage
+	fromEnemy = fEnemy
+	pass
+
 func calculate_damage():
-	damage += upgrade[\"level\"] * 2
+	if !fromEnemy:
+		damage += upgrade[\"level\"] * 2
 	pass
 
 func _process(delta):
@@ -41,8 +48,13 @@ func _process(delta):
 	pass
 
 func _on_DetectionArea_area_entered(area):
-	if area.is_in_group(\"Enemy\") and !enemyTarget:
-		enemyTarget = area
+	if !enemyTarget:
+		if !fromEnemy:
+			if area.is_in_group(\"Enemy\"):
+				enemyTarget = area
+		else:
+			if area.is_in_group(\"Player\"):
+				enemyTarget = area
 	pass # replace with function body
 
 

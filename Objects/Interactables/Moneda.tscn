@@ -11,10 +11,10 @@
 resource_name = "Moneda.gd"
 script/source = "extends Area2D
 
-var direction = Vector2(0,-1)
+var direction = Vector2(0,1)
 var taken = false
 var magneticArea = null
-var speed = 100
+var speed = 125
 
 func _ready():
 	$Anim.advance(rand_range(0,$Anim.current_animation_length))
@@ -174,7 +174,9 @@ animations = [ {
 "speed": 7.0
 } ]
 
-[node name="Moneda" type="Area2D"]
+[node name="Moneda" type="Area2D" groups=[
+"Coin",
+]]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -233,7 +235,7 @@ rect = Rect2( -10, -10, 20, 20 )
 scale = Vector2( 0.8, 0.8 )
 frames = SubResource( 10 )
 animation = "default"
-frame = 3
+frame = 1
 playing = true
 _sections_unfolded = [ "Transform", "Visibility" ]
 

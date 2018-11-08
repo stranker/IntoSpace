@@ -9,7 +9,7 @@ script/source = "extends Node2D
 
 onready var clusterList = get_children()
 var timer = 0
-var deathTime = 8
+var deathTime = 20
 var cluster
 
 func _ready():
@@ -33,13 +33,14 @@ func activate_random_cluster():
 
 
 func _on_VisibilityNotifier2D_screen_exited():
-	if global_position.y > get_viewport_rect().size.y:
-		queue_free()
+	queue_free()
 	pass # replace with function body
 "
 _sections_unfolded = [ "Resource" ]
 
-[node name="ClusterMonedas" type="Node2D"]
+[node name="ClusterMonedas" type="Node2D" index="0" groups=[
+"ClusterCoins",
+]]
 
 script = SubResource( 1 )
 

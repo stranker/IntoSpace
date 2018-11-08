@@ -1,12 +1,18 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Sprites/Background/BG_6.jpg" type="Texture" id=1]
 [ext_resource path="res://Sprites/Background/Stars_1.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/Background/Stars_2.png" type="Texture" id=3]
-[ext_resource path="res://Objects/UI/UIPanel.tscn" type="PackedScene" id=4]
-[ext_resource path="res://UI/UpgradePanel.tscn" type="PackedScene" id=5]
+[ext_resource path="res://UI/UpgradePanel.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Objects/UI/UIPanel.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Objects/Player/Spaceship.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Objects/Misc/Camara.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Objects/Misc/Spawner.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Objects/Interactables/ClusterMonedas.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Objects/Enemies/Asteroide.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Objects/Enemies/ScoutEnemy.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Objects/Enemies/SiegeEnemy.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Objects/Enemies/TankEnemy.tscn" type="PackedScene" id=13]
 
 [sub_resource type="GDScript" id=1]
 
@@ -17,6 +23,8 @@ var debugPanel = false
 
 func _ready():
 	$UIPanel/DebugPanel/Panel.visible = debugPanel
+	Global.enemiesParent = $Enemies
+	Global.coinsParent = $Coins
 	pass
 
 func _on_DebugPanel_button_down():
@@ -123,7 +131,9 @@ position = Vector2( 356.975, 641.586 )
 texture = ExtResource( 3 )
 _sections_unfolded = [ "Offset" ]
 
-[node name="UIPanel" parent="." index="1" instance=ExtResource( 4 )]
+[node name="UpgradePanel" parent="." index="1" instance=ExtResource( 4 )]
+
+[node name="UIPanel" parent="." index="2" instance=ExtResource( 5 )]
 
 editor/display_folded = true
 
@@ -325,8 +335,6 @@ text = "INC MAGNET COIN"
 flat = false
 align = 1
 
-[node name="UpgradePanel" parent="." index="2" instance=ExtResource( 5 )]
-
 [node name="SpaceShip" parent="." index="3" instance=ExtResource( 6 )]
 
 position = Vector2( 334.39, 1051.15 )
@@ -334,6 +342,54 @@ position = Vector2( 334.39, 1051.15 )
 [node name="Camara" parent="." index="4" instance=ExtResource( 7 )]
 
 position = Vector2( 361.123, 636.903 )
+
+[node name="Enemies" type="Node2D" parent="." index="5"]
+
+[node name="Coins" type="Node2D" parent="." index="6"]
+
+[node name="Spawners" type="Node2D" parent="." index="7"]
+
+[node name="Spawner" parent="Spawners" index="0" instance=ExtResource( 8 )]
+
+position = Vector2( 163.64, -83.0786 )
+object = ExtResource( 9 )
+minTime = 3.0
+maxTime = 20.0
+
+[node name="Spawner2" parent="Spawners" index="1" instance=ExtResource( 8 )]
+
+position = Vector2( 536.235, -85.5962 )
+object = ExtResource( 9 )
+minTime = 6.0
+maxTime = 15.0
+
+[node name="Spawner3" parent="Spawners" index="2" instance=ExtResource( 8 )]
+
+position = Vector2( 336.959, -155.372 )
+object = ExtResource( 9 )
+minTime = 1.0
+maxTime = 10.0
+
+[node name="Spawner4" parent="Spawners" index="3" instance=ExtResource( 8 )]
+
+position = Vector2( 127.981, -227.021 )
+objectList = [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ) ]
+minTime = 1.0
+maxTime = 10.0
+
+[node name="Spawner5" parent="Spawners" index="4" instance=ExtResource( 8 )]
+
+position = Vector2( 336.295, -85.7126 )
+objectList = [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ) ]
+minTime = 1.0
+maxTime = 10.0
+
+[node name="Spawner6" parent="Spawners" index="5" instance=ExtResource( 8 )]
+
+position = Vector2( 594.366, -221.714 )
+objectList = [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ) ]
+minTime = 1.0
+maxTime = 10.0
 
 [connection signal="button_down" from="UIPanel/DebugPanel" to="." method="_on_DebugPanel_button_down"]
 

@@ -24,7 +24,7 @@ func shoot():
 		canShoot = false
 		var hm = homingMissile.instance()
 		get_tree().root.call_deferred(\"add_child\",hm)
-		hm.set_damage(damage)
+		hm.shoot(damage,fromEnemy)
 		hm.global_position = $Pos.global_position
 		$HoverShoot.start()
 	pass

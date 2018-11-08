@@ -1,21 +1,21 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Objects/Interactables/EnemyBullet.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Sprites/Player/SS_2.png" type="Texture" id=2]
-[ext_resource path="res://Objects/Powers/Turret.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Sprites/Player/SS_2.png" type="Texture" id=1]
+[ext_resource path="res://Objects/Powers/Turret.tscn" type="PackedScene" id=2]
 
 [sub_resource type="GDScript" id=1]
 
 resource_name = "TankEnemy.gd"
 script/source = "extends \"res://Scripts/Enemy.gd\"
 
-export (PackedScene) var bullet
 export (float) var firerate
 var moving = true
 var directionPlayer
 
 func _ready():
 	randomize()
+	$MovementTimer.wait_time = rand_range(1.5,3)
+	direction.y = 1
 	if position.x < get_viewport_rect().size.x / 2:
 		direction.x = rand_range(0,1)
 	else:
@@ -24,18 +24,15 @@ func _ready():
 
 func _process(delta):
 	movement(delta)
-	directionPlayer = (Global.player.global_position - global_position).normalized()
+	if Global.player:
+		directionPlayer = (Global.player.global_position - global_position).normalized()
 	rotation = directionPlayer.angle()
 	pass
 
 func movement(delta):
-	if moving:
-		direction.y = -400
-	else:
-		direction.y = - Global.camera.cameraSpeed
-		direction.x = 0
-	velocity.x = direction.x * speed
-	velocity.y = direction.y
+	if !moving:
+		direction = Vector2()
+	velocity = direction * speed
 	translate(velocity * delta)
 	pass
 
@@ -94,7 +91,7 @@ tracks/1/keys = {
 } ]
 }
 
-[node name="TankEnemy" type="Area2D" index="0"]
+[node name="TankEnemy" type="Area2D"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -105,40 +102,30 @@ audio_bus_override = false
 audio_bus_name = "Master"
 script = SubResource( 1 )
 life = 4
-speed = 10
+speed = 200
 damage = 2
 points = 500
-bullet = ExtResource( 1 )
 firerate = 4.0
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
 position = Vector2( 0.189238, 0.189236 )
 scale = Vector2( 0.621531, 0.621531 )
-texture = ExtResource( 2 )
+texture = ExtResource( 1 )
 _sections_unfolded = [ "Visibility" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
 shape = SubResource( 2 )
 
-[node name="Turret" parent="." index="2" instance=ExtResource( 3 )]
-
-bullet = ExtResource( 1 )
-fromEnemy = true
-
-[node name="FireRate" parent="Turret" index="0"]
-
-wait_time = 3.0
-
-[node name="MovementTimer" type="Timer" parent="." index="3"]
+[node name="MovementTimer" type="Timer" parent="." index="2"]
 
 process_mode = 1
-wait_time = 5.0
+wait_time = 2.0
 one_shot = true
 autostart = true
 
-[node name="Anim" type="AnimationPlayer" parent="." index="4"]
+[node name="Anim" type="AnimationPlayer" parent="." index="3"]
 
 root_node = NodePath("..")
 autoplay = ""
@@ -148,7 +135,11 @@ playback_speed = 1.0
 anims/Dead = SubResource( 3 )
 blend_times = [  ]
 
+[node name="Turret" parent="." index="4" instance=ExtResource( 2 )]
+
+position = Vector2( 40.0022, 0 )
+fromEnemy = true
+
 [connection signal="timeout" from="MovementTimer" to="." method="_on_MovementTimer_timeout"]
 
 
-[editable path="Turret"]

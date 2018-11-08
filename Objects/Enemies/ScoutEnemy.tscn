@@ -8,7 +8,7 @@ resource_name = "ScoutEnemy.gd"
 script/source = "extends \"res://Scripts/Enemy.gd\"
 
 func _ready():
-	velocity.y = -200
+	direction.y = 1
 	pass
 
 func _process(delta):
@@ -17,7 +17,7 @@ func _process(delta):
 
 func movement(delta):
 	direction.x = (Global.player.global_position - global_position).normalized().x
-	velocity.x = direction.x * speed
+	velocity = direction * speed
 	translate(velocity * delta)
 	pass
 
@@ -86,7 +86,7 @@ audio_bus_override = false
 audio_bus_name = "Master"
 script = SubResource( 1 )
 life = 2
-speed = 100
+speed = 200
 damage = 2
 points = 200
 
