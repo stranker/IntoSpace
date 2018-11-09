@@ -14,14 +14,15 @@ var enabled = false
 
 func _ready():
 	$RayCast2D.add_exception(get_parent())
+	set_active(false)
 	pass
 
 func set_active(val):
 	enabled = val
 	$Timer.start()
+	visible = enabled
 
 func _process(delta):
-	visible = enabled
 	if enabled:
 		if $RayCast2D.is_colliding():
 			var target = $RayCast2D.get_collider()
@@ -36,17 +37,18 @@ func _process(delta):
 
 func calculate_fill(delta):
 	if enemy and enemy.alive:
-		var enemyPos = enemy.position
+		var enemyPos = enemy.global_position
 		$Particulas.visible = true
 		$Particulas.global_position = enemyPos
-		$Sprite.value = (($Sprite.rect_global_position.y +$Sprite.rect_size.y - enemyPos.y) * $Sprite.max_value) / $Sprite.rect_size.y
+		$Sprite.value = ($Sprite.rect_size.y - enemyPos.y) / $Sprite.rect_size.y
 	else:
-		$Sprite.value += 200 * delta
+		$Sprite.value += 100 * delta
 		$Particulas.visible = false
 	pass
 
 func _on_Timer_timeout():
 	enabled = false
+	visible = enabled
 	pass # replace with function body
 "
 _sections_unfolded = [ "Resource" ]
@@ -114,7 +116,7 @@ script = SubResource( 1 )
 scale = Vector2( 8, 1 )
 enabled = true
 exclude_parent = true
-cast_to = Vector2( 0, -2000 )
+cast_to = Vector2( 0, -1800 )
 collision_mask = 2
 _sections_unfolded = [ "Transform" ]
 
@@ -124,10 +126,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = -10.0
-margin_top = -1428.0
-margin_right = 10.0
-margin_bottom = -28.0
+margin_left = -8.0
+margin_top = -1795.0
+margin_right = 12.0
+margin_bottom = 5.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -138,7 +140,7 @@ min_value = 0.0
 max_value = 100.0
 step = 1.0
 page = 0.0
-value = 100.0
+value = 50.0
 exp_edit = false
 rounded = false
 texture_under = null

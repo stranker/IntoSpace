@@ -18,7 +18,7 @@ var moving = false
 var sizeSprite
 var dragging = false
 var alive
-var canBeDamaged = true
+var canBeDamaged = false
 
 func _ready():
 	initialize()
@@ -106,7 +106,10 @@ func _on_SpaceShip_area_entered(area):
 		take_damage(area.damage)
 		area.take_damage(9999)
 	pass # replace with function body
-"
+
+func change_can_shoot():
+	$ShootController.set_active(!$ShootController.enabled)
+	pass"
 _sections_unfolded = [ "Resource" ]
 
 [sub_resource type="CircleShape2D" id=2]
@@ -216,6 +219,7 @@ position = Vector2( -0.429291, 5.79529 )
 [node name="HomingShooter" parent="." index="4" instance=ExtResource( 4 )]
 
 position = Vector2( 0, -39.0247 )
+fireRate = 1.5
 
 [node name="ShootController" parent="." index="5" instance=ExtResource( 5 )]
 
@@ -241,3 +245,4 @@ blend_times = [  ]
 [connection signal="area_entered" from="." to="." method="_on_SpaceShip_area_entered"]
 
 
+[editable path="HomingShooter"]

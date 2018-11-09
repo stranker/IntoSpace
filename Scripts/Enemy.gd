@@ -9,7 +9,6 @@ var velocity = Vector2()
 var direction = Vector2()
 
 func _ready():
-	add_to_group("Enemy")
 	alive = true
 	pass
 

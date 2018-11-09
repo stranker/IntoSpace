@@ -7,36 +7,33 @@
 resource_name = "HomingMissile.gd"
 script/source = "extends Area2D
 
-export (int) var damage = 1
+var damage = 1
 export (int) var speed = 800
 export (float) var steerForce = 0
 var enemyTarget = null
-var fromEnemy = false
+var fromEnemy
 var velocity = Vector2()
 var acceleration = Vector2()
 var direction = Vector2()
 var steer
-onready var upgrade = Global.get_upgrade_by_id(id_upgrade)
-var id_upgrade = 4
 
 func _ready():
-	direction.x = rand_range(-0.5,0.5)
-	direction.y = -2
-	direction = direction.normalized()
-	velocity = direction * speed
-	rotation = velocity.angle()
-	calculate_damage()
 	pass
 
 func shoot(_damage,fEnemy):
 	damage = _damage
 	fromEnemy = fEnemy
+	direction.x = rand_range(-0.2,0.2)
+	if !fromEnemy:
+		direction.y = -1
+	else:
+		direction.y = 1
+		speed = speed / 1.5
+	direction = direction.normalized()
+	velocity = direction * speed
+	rotation = velocity.angle()
 	pass
 
-func calculate_damage():
-	if !fromEnemy:
-		damage += upgrade[\"level\"] * 2
-	pass
 
 func _process(delta):
 	if enemyTarget and enemyTarget.alive:
@@ -64,9 +61,14 @@ func seek_enemy():
 	return steer
 
 func _on_HoverMissile_area_entered(area):
-	if area.is_in_group(\"Enemy\") and area.alive:
-		area.take_damage(damage)
-		queue_free()
+	if !fromEnemy:
+		if area.is_in_group(\"Enemy\") and area.alive:
+			area.take_damage(damage)
+			queue_free()
+	else:
+		if area.is_in_group(\"Player\") and area.alive:
+			area.take_damage(damage)
+			queue_free()
 	pass # replace with function body
 
 
@@ -99,7 +101,6 @@ audio_bus_override = false
 audio_bus_name = "Master"
 script = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
-damage = 1
 speed = 800
 steerForce = 40.0
 

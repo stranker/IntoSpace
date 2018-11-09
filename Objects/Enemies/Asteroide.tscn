@@ -14,21 +14,23 @@ func _ready():
 	randomize()
 	calculate_direction()
 	initialRotation = rand_range(-1,1)
+	direction.y = 1
 	pass
 
 func _process(delta):
 	if alive:
 		$Sprite.rotation += initialRotation * delta
-		translate(direction * speed * delta)
+		velocity = direction * speed
+		translate(velocity * delta)
 	pass
 
 func take_damage(damage):
 	if alive:
 		life -= damage
-		$AnimSprite.play(\"Flick\")
+		$Anim.play(\"Flick\")
 		if life <= 0:
 			alive = false
-			$AnimSprite.play(\"Dead\")
+			$Anim.play(\"Dead\")
 			Global.camera.minimal_shake()
 			Global.points += points
 	pass
@@ -204,7 +206,9 @@ anim_offset_random = 0.0
 anim_loop = false
 _sections_unfolded = [ "Color", "Emission Shape", "Gravity", "Spread" ]
 
-[node name="Asteroide" type="Area2D"]
+[node name="Asteroide" type="Area2D" groups=[
+"Enemy",
+]]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -217,7 +221,7 @@ audio_bus_name = "Master"
 script = SubResource( 1 )
 _sections_unfolded = [ "Collision" ]
 life = 2
-speed = 200
+speed = 300
 damage = 1
 points = 200
 
@@ -225,13 +229,14 @@ points = 200
 
 scale = Vector2( 0.8, 0.8 )
 texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 90, 98 )
 _sections_unfolded = [ "Transform", "Visibility" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
 shape = SubResource( 2 )
 
-[node name="AnimSprite" type="AnimationPlayer" parent="." index="2"]
+[node name="Anim" type="AnimationPlayer" parent="." index="2"]
 
 root_node = NodePath("..")
 autoplay = ""
@@ -296,6 +301,16 @@ shadow_gradient_length = 0.0
 shadow_filter = 0
 shadow_filter_smooth = 0.0
 shadow_item_cull_mask = 1
+
+[node name="VisibilityEnabler2D" type="VisibilityEnabler2D" parent="." index="6"]
+
+rect = Rect2( -10, -10, 20, 20 )
+pause_animations = true
+freeze_bodies = true
+pause_particles = true
+pause_animated_sprites = true
+process_parent = true
+physics_process_parent = false
 
 [connection signal="timeout" from="AliveTimer" to="." method="_on_AliveTimer_timeout"]
 

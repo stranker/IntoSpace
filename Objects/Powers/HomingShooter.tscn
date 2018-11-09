@@ -8,14 +8,27 @@ resource_name = "HomingShooter.gd"
 script/source = "extends Node2D
 
 export (PackedScene) var homingMissile
+export (float) var fireRate = 1
 export (bool) var fromEnemy
 var canShoot = true
 var enabled = false
-var damage
+var id_upgrade = 4
+onready var upgrade = Global.get_upgrade_by_id(id_upgrade)
+var damage = 1
+
+func calculate_damage():
+	if !fromEnemy:
+		damage += upgrade[\"level\"] * 2
+	pass
+
+
+func _ready():
+	$HoverShoot.wait_time = fireRate
+	calculate_damage()
+	pass
 
 func _process(delta):
 	if enabled:
-		damage = get_parent().damage
 		shoot()
 	pass
 
@@ -39,6 +52,7 @@ _sections_unfolded = [ "Resource" ]
 
 script = SubResource( 1 )
 homingMissile = ExtResource( 1 )
+fireRate = 1
 fromEnemy = null
 
 [node name="HoverShoot" type="Timer" parent="." index="0"]

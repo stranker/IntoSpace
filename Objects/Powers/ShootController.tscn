@@ -8,7 +8,7 @@ resource_name = "ShootController.gd"
 script/source = "extends Node2D
 
 export (float) var firerate = 0.6
-var enabled = false
+var enabled = true
 var id_upgrade = 3
 onready var upgrade = Global.get_upgrade_by_id(id_upgrade)
 var level = 1
@@ -16,13 +16,12 @@ var level = 1
 func _ready():
 	initialize_turrets()
 	level = upgrade[\"level\"]
-	activate_turrets(level)
+	set_active_turrets(true)
 	pass
 
 func set_active(val):
 	enabled = val
-	if enabled:
-		activate_turrets(level)
+	set_active_turrets(val)
 	pass
 
 func initialize_turrets():
@@ -48,16 +47,14 @@ func _process(delta):
 	if enabled:
 		if level != upgrade[\"level\"]:
 			level = upgrade[\"level\"]
-			activate_turrets(level + 1)
-			syncronize_turrets()
 	pass
 
-func activate_turrets(topeTurret):
+func set_active_turrets(val):
 	var cont = 0
 	for i in get_children():
 		if i.name.find(\"Turret\") >= 0:
-			if cont < topeTurret:
-				i.enabled = true
+			if cont < level:
+				i.enabled = val
 				cont += 1
 	pass
 
@@ -67,7 +64,7 @@ func get_firerate():
 
 func syncronize_turrets():
 	for i in get_children():
-		if i.name.find(\"Turret\")>=0:
+		if i.name.find(\"Turret\") >= 0:
 			i.reset_timer()
 	pass
 

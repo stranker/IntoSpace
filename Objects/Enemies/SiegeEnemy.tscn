@@ -11,21 +11,15 @@ script/source = "extends \"res://Scripts/Enemy.gd\"
 const minDistance = 250
 
 func _ready():
-	$HomingShooter.enabled = true
+	$HomingShooter.enabled = false
 	direction.y = 1
+	direction.x = rand_range(-0.1,0.1)
 	pass
 
 func _process(delta):
-	if Global.player:
-		movement(delta)
-		shoot_controller()
+	movement(delta)
 	pass
 
-func shoot_controller():
-	if alive and Global.player:
-		if Global.player and global_position.y > Global.player.global_position.y - minDistance:
-			$HomingShooter.enabled = false
-	pass
 
 func movement(delta):
 	velocity = direction * speed
@@ -83,16 +77,20 @@ tracks/1/keys = {
 } ]
 }
 
-[node name="SiegeEnemy" type="Area2D"]
+[node name="SiegeEnemy" type="Area2D" groups=[
+"Enemy",
+]]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
+collision_layer = 2
 audio_bus_override = false
 audio_bus_name = "Master"
 script = SubResource( 1 )
+_sections_unfolded = [ "Collision" ]
 life = 3
 speed = 50
 damage = 3
@@ -114,8 +112,9 @@ shape = SubResource( 2 )
 
 [node name="HomingShooter" parent="." index="2" instance=ExtResource( 2 )]
 
-editor/display_folded = true
-position = Vector2( 0, 89.9993 )
+position = Vector2( -0.647064, 85.0891 )
+_sections_unfolded = [ "Transform" ]
+fireRate = 3.0
 fromEnemy = true
 
 [node name="HoverShoot" parent="HomingShooter" index="0"]

@@ -33,10 +33,10 @@ func _on_Timer_timeout():
 		a = objectList[rand_range(0,objectList.size())].instance()
 	else:
 		a = object.instance()
-	if a.is_in_group(\"Enemy\"):
-		Global.enemiesParent.call_deferred(\"add_child\",a)
-	elif a.is_in_group(\"ClusterCoins\"):
-		Global.coinsParent.call_deferred(\"add_child\",a)
+	if a.is_in_group(\"ClusterCoins\"):
+		get_node(\"../../Coins\").call_deferred(\"add_child\", a)
+	elif a.is_in_group(\"Enemy\"):
+		get_node(\"../../Enemies\").call_deferred(\"add_child\", a)
 	a.global_position = global_position
 	new_time()
 	pass # replace with function body
@@ -47,7 +47,7 @@ _sections_unfolded = [ "Resource" ]
 
 script = SubResource( 1 )
 object = null
-objectList = null
+objectList = [  ]
 minTime = null
 maxTime = null
 

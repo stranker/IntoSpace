@@ -235,7 +235,7 @@ rect = Rect2( -10, -10, 20, 20 )
 scale = Vector2( 0.8, 0.8 )
 frames = SubResource( 10 )
 animation = "default"
-frame = 1
+frame = 4
 playing = true
 _sections_unfolded = [ "Transform", "Visibility" ]
 
