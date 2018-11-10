@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Sprites/Background/BG_6.jpg" type="Texture" id=1]
 [ext_resource path="res://Sprites/Background/Stars_1.png" type="Texture" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://Objects/Enemies/ScoutEnemy.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Objects/Enemies/SiegeEnemy.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Objects/Enemies/TankEnemy.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Objects/Interactables/SpaceStation.tscn" type="PackedScene" id=14]
 
 [sub_resource type="GDScript" id=1]
 
@@ -23,6 +24,12 @@ var debugPanel = false
 
 func _ready():
 	$UIPanel/DebugPanel/Panel.visible = debugPanel
+	pass
+
+func _input(event):
+	if event is InputEventKey:
+		if event.scancode == KEY_Q and !event.pressed:
+			$UIPanel/DebugPanel.visible = !$UIPanel/DebugPanel.visible
 	pass
 
 func _on_DebugPanel_button_down():
@@ -65,7 +72,7 @@ func _on_MagnetCoin_button_down():
 "
 _sections_unfolded = [ "Resource" ]
 
-[node name="GameScene" type="Node2D"]
+[node name="GameScene" type="Node2D" index="0"]
 
 script = SubResource( 1 )
 
@@ -130,6 +137,8 @@ texture = ExtResource( 3 )
 _sections_unfolded = [ "Offset" ]
 
 [node name="UIPanel" parent="." index="1" instance=ExtResource( 4 )]
+
+editor/display_folded = true
 
 [node name="Panel" parent="UIPanel" index="0"]
 
@@ -385,11 +394,11 @@ maxTime = 10.0
 
 [node name="Coins" type="Node2D" parent="." index="6"]
 
+[node name="SpaceStation" parent="Coins" index="0" instance=ExtResource( 14 )]
+
+position = Vector2( 190.854, 104.515 )
+
 [node name="Enemies" type="Node2D" parent="." index="7"]
-
-[node name="SiegeEnemy" parent="Enemies" index="0" instance=ExtResource( 12 )]
-
-position = Vector2( 49.9855, 143.141 )
 
 [connection signal="button_down" from="UIPanel/DebugPanel" to="." method="_on_DebugPanel_button_down"]
 

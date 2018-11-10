@@ -37,12 +37,12 @@ func _on_SpaceStation_area_entered(area):
 
 
 func _on_VisibilityNotifier2D_screen_entered():
-	Global.camera.set_active_spawns(false)
+	Global.set_active_spawns(false)
 	pass # replace with function body
 
 
 func _on_VisibilityNotifier2D_screen_exited():
-	Global.camera.set_active_spawns(true)
+	Global.set_active_spawns(true)
 	pass # replace with function body
 "
 _sections_unfolded = [ "Resource" ]
@@ -52,7 +52,7 @@ _sections_unfolded = [ "Resource" ]
 custom_solver_bias = 0.0
 extents = Vector2( 158.724, 90 )
 
-[node name="SpaceStation" type="Area2D"]
+[node name="SpaceStation" type="Area2D" index="0"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )

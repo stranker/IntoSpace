@@ -37,10 +37,10 @@ func _process(delta):
 
 func calculate_fill(delta):
 	if enemy and enemy.alive:
-		var enemyPos = enemy.global_position
+		var enemyPos = enemy.position
 		$Particulas.visible = true
 		$Particulas.global_position = enemyPos
-		$Sprite.value = ($Sprite.rect_size.y - enemyPos.y) / $Sprite.rect_size.y
+		$Sprite.value = (($Sprite.rect_global_position.y + $Sprite.rect_size.y - enemyPos.y) / $Sprite.rect_size.y) * 100
 	else:
 		$Sprite.value += 100 * delta
 		$Particulas.visible = false
@@ -107,7 +107,7 @@ anim_offset_random = 0.0
 anim_loop = false
 _sections_unfolded = [ "Gravity", "Initial Velocity", "Linear Accel", "Scale", "Spread" ]
 
-[node name="Laser" type="Node2D" index="0"]
+[node name="Laser" type="Node2D"]
 
 script = SubResource( 1 )
 
@@ -140,7 +140,7 @@ min_value = 0.0
 max_value = 100.0
 step = 1.0
 page = 0.0
-value = 50.0
+value = 80.0
 exp_edit = false
 rounded = false
 texture_under = null
