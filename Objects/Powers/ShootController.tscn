@@ -47,12 +47,14 @@ func _process(delta):
 	if enabled:
 		if level != upgrade[\"level\"]:
 			level = upgrade[\"level\"]
+			set_active_turrets(true)
 	pass
 
 func set_active_turrets(val):
 	var cont = 0
 	for i in get_children():
 		if i.name.find(\"Turret\") >= 0:
+			i.reset_timer()
 			if cont < level:
 				i.enabled = val
 				cont += 1
@@ -60,13 +62,6 @@ func set_active_turrets(val):
 
 func get_firerate():
 	return firerate
-
-
-func syncronize_turrets():
-	for i in get_children():
-		if i.name.find(\"Turret\") >= 0:
-			i.reset_timer()
-	pass
 
 func set_firerate(val):
 	firerate = val
@@ -82,11 +77,12 @@ func _on_Timer_timeout():
 "
 _sections_unfolded = [ "Resource" ]
 
-[node name="ShootController" type="Node2D"]
+[node name="ShootController" type="Node2D" index="0"]
 
+pause_mode = 2
 show_behind_parent = true
 script = SubResource( 1 )
-_sections_unfolded = [ "Visibility" ]
+_sections_unfolded = [ "Pause", "Visibility" ]
 firerate = 0.6
 
 [node name="Turret1" parent="." index="0" instance=ExtResource( 1 )]

@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id=1]
 
 custom_solver_bias = 0.0
-radius = 50.0
+radius = 70.0
 
 [sub_resource type="Animation" id=2]
 
@@ -29,6 +29,7 @@ tracks/0/keys = {
 
 [node name="MagnetArea" type="Area2D"]
 
+pause_mode = 2
 input_pickable = true
 gravity_point = true
 gravity_vec = Vector2( 0, 1 )
@@ -38,8 +39,9 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 1 )
+_sections_unfolded = [ "Pause" ]
 incrementFactor = 5
-initialRadius = 50
+initialRadius = 60
 
 [node name="Colision" type="CollisionShape2D" parent="." index="0"]
 
@@ -50,8 +52,8 @@ _sections_unfolded = [ "Transform" ]
 [node name="Sprite" type="Sprite" parent="." index="1"]
 
 modulate = Color( 1, 1, 1, 0.171294 )
-position = Vector2( 0.170921, -0.201656 )
-scale = Vector2( 1.5, 1.5 )
+position = Vector2( 0.615427, 0.689107 )
+scale = Vector2( 2.03496, 2.03496 )
 texture = ExtResource( 2 )
 offset = Vector2( -0.830917, -1.66512 )
 _sections_unfolded = [ "Transform", "Visibility" ]

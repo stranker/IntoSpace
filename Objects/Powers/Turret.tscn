@@ -33,7 +33,7 @@ func _process(delta):
 				level = upgrade[\"level\"]
 				damage = level * 2
 		set_direction()
-		if firerate != get_parent().get_firerate():
+		if firerate != get_parent().get_firerate() and !$FireRate.is_stopped():
 			firerate = get_parent().get_firerate()
 			$FireRate.wait_time = firerate
 		shoot()

@@ -1,0 +1,122 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Objects/Misc/Spawner.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Objects/Interactables/ClusterMonedas.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Objects/Enemies/Asteroide.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Objects/Enemies/ScoutEnemy.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Objects/Enemies/SiegeEnemy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Objects/Enemies/TankEnemy.tscn" type="PackedScene" id=6]
+
+[sub_resource type="GDScript" id=1]
+
+resource_name = "Spawners.gd"
+script/source = "extends Node2D
+
+onready var spawners = get_children()
+
+func _ready():
+	Global.spawnManager = self
+	pass
+
+func set_active_spawners(val):
+	for i in spawners:
+		i.set_active(val)
+	pass
+"
+_sections_unfolded = [ "Resource" ]
+
+[sub_resource type="GDScript" id=2]
+
+script/source = "extends Position2D
+
+export (PackedScene) var object
+export (Array) var objectList
+export (float) var minTime
+export (float) var maxTime
+var enabled
+
+func _ready():
+	randomize()
+	new_time()
+	pass
+
+func new_time():
+	$Timer.wait_time = rand_range(minTime,maxTime)
+	pass
+
+func set_active(val):
+	enabled = val
+	if enabled:
+		$Timer.start()
+	else:
+		$Timer.stop()
+
+func _on_Timer_timeout():
+	var a = null
+	if objectList:
+		a = objectList[rand_range(0,objectList.size())].instance()
+	else:
+		a = object.instance()
+	if a.is_in_group(\"ClusterCoins\"):
+		get_node(\"../../Coins\").call_deferred(\"add_child\", a)
+	elif a.is_in_group(\"Enemy\"):
+		get_node(\"../../Enemies\").call_deferred(\"add_child\", a)
+	a.global_position = global_position
+	new_time()
+	pass # replace with function body
+"
+_sections_unfolded = [ "Resource" ]
+
+[node name="Spawners" type="Node2D"]
+
+script = SubResource( 1 )
+
+[node name="S_Mondedas" parent="." index="0" instance=ExtResource( 1 )]
+
+position = Vector2( 163.64, -83.0786 )
+script = SubResource( 2 )
+object = ExtResource( 2 )
+minTime = 3.0
+maxTime = 20.0
+
+[node name="S_Mondedas2" parent="." index="1" instance=ExtResource( 1 )]
+
+position = Vector2( 536.235, -85.5962 )
+script = SubResource( 2 )
+object = ExtResource( 2 )
+minTime = 6.0
+maxTime = 15.0
+
+[node name="S_Mondedas3" parent="." index="2" instance=ExtResource( 1 )]
+
+position = Vector2( 336.959, -155.372 )
+script = SubResource( 2 )
+object = ExtResource( 2 )
+minTime = 1.0
+maxTime = 10.0
+
+[node name="S_Enemy" parent="." index="3" instance=ExtResource( 1 )]
+
+position = Vector2( 127.981, -227.021 )
+script = SubResource( 2 )
+objectList = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ]
+minTime = 1.0
+maxTime = 10.0
+
+[node name="S_Enemy2" parent="." index="4" instance=ExtResource( 1 )]
+
+position = Vector2( 336.295, -85.7126 )
+script = SubResource( 2 )
+objectList = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ]
+minTime = 1.0
+maxTime = 10.0
+
+[node name="S_Enemy3" parent="." index="5" instance=ExtResource( 1 )]
+
+position = Vector2( 594.366, -221.714 )
+script = SubResource( 2 )
+objectList = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ]
+minTime = 1.0
+maxTime = 10.0
+
+
