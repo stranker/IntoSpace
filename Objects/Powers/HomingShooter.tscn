@@ -8,7 +8,9 @@ resource_name = "HomingShooter.gd"
 script/source = "extends Node2D
 
 export (PackedScene) var homingMissile
-export (float) var fireRate = 1
+export (float) var minFireRate
+export (float) var maxFireRate
+var fireRate
 export (bool) var fromEnemy
 var canShoot = true
 var enabled = false
@@ -21,10 +23,16 @@ func calculate_damage():
 		damage += upgrade[\"level\"] * 2
 	pass
 
+func calculate_firerate():
+	fireRate = rand_range(minFireRate,maxFireRate)
+	pass
 
-func _ready():
-	$HoverShoot.wait_time = fireRate
-	calculate_damage()
+func set_active(val):
+	enabled = val
+	if val:
+		calculate_firerate()
+		calculate_damage()
+		$HoverShoot.wait_time = fireRate
 	pass
 
 func _process(delta):
@@ -52,7 +60,8 @@ _sections_unfolded = [ "Resource" ]
 
 script = SubResource( 1 )
 homingMissile = ExtResource( 1 )
-fireRate = 1
+minFireRate = null
+maxFireRate = null
 fromEnemy = null
 
 [node name="HoverShoot" type="Timer" parent="." index="0"]

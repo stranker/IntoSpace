@@ -11,7 +11,7 @@ script/source = "extends \"res://Scripts/Enemy.gd\"
 const minDistance = 250
 
 func _ready():
-	$HomingShooter.enabled = false
+	$HomingShooter.set_active(true)
 	direction.y = 1
 	direction.x = rand_range(-0.1,0.1)
 	pass
@@ -114,7 +114,8 @@ shape = SubResource( 2 )
 
 position = Vector2( -0.647064, 85.0891 )
 _sections_unfolded = [ "Transform" ]
-fireRate = 3.0
+minFireRate = 3.0
+maxFireRate = 7.0
 fromEnemy = true
 
 [node name="HoverShoot" parent="HomingShooter" index="0"]

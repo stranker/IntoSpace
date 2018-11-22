@@ -76,7 +76,7 @@ script = SubResource( 1 )
 position = Vector2( 163.64, -83.0786 )
 script = SubResource( 2 )
 object = ExtResource( 2 )
-minTime = 3.0
+minTime = 5.0
 maxTime = 20.0
 
 [node name="S_Mondedas2" parent="." index="1" instance=ExtResource( 1 )]
@@ -100,7 +100,7 @@ maxTime = 10.0
 position = Vector2( 127.981, -227.021 )
 script = SubResource( 2 )
 objectList = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ]
-minTime = 1.0
+minTime = 4.0
 maxTime = 10.0
 
 [node name="S_Enemy2" parent="." index="4" instance=ExtResource( 1 )]
@@ -108,15 +108,15 @@ maxTime = 10.0
 position = Vector2( 336.295, -85.7126 )
 script = SubResource( 2 )
 objectList = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ]
-minTime = 1.0
-maxTime = 10.0
+minTime = 5.0
+maxTime = 15.0
 
 [node name="S_Enemy3" parent="." index="5" instance=ExtResource( 1 )]
 
 position = Vector2( 594.366, -221.714 )
 script = SubResource( 2 )
 objectList = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ]
-minTime = 1.0
+minTime = 8.0
 maxTime = 10.0
 
 

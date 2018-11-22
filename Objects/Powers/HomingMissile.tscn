@@ -67,7 +67,7 @@ func _on_HoverMissile_area_entered(area):
 			queue_free()
 	else:
 		if area.is_in_group(\"Player\") and area.alive:
-			area.take_damage(damage)
+			area.take_damage()
 			queue_free()
 	pass # replace with function body
 

@@ -17,8 +17,7 @@ var offsetPos = Vector2()
 var moving = false
 var sizeSprite
 var dragging = false
-var alive
-var canBeDamaged = false
+var alive = true
 
 func _ready():
 	initialize()
@@ -64,10 +63,7 @@ func add_shield():
 	pass
 
 func homing_missile():
-	if !$HomingShooter.enabled:
-		$HomingShooter.enabled = true
-	else:
-		$HomingShooter.enabled = false
+	$HomingShooter.set_active(!$HomingShooter.enabled)
 	pass
 
 func add_turrets():
@@ -88,23 +84,18 @@ func set_shoot_controller():
 func increment_magnet():
 	$MagnetArea.increment_magnet()
 
-func take_damage(val):
-	if canBeDamaged:
-		life -= val
-		canBeDamaged = false
-		$Anim.play(\"Hit\")
-		if life <= 0:
-			$Anim.play(\"Dead\")
-			Global.player = null
-			get_tree().change_scene(\"res://Scenes/DeadScene.tscn\")
-
-func set_canBeDamaged(val):
-	canBeDamaged = val
+func take_damage():
+	if alive:
+		alive = false
+		$Anim.play(\"Dead\")
+		Global.player = null
+		get_tree().change_scene(\"res://Scenes/DeadScene.tscn\")
+	pass
 
 func _on_SpaceShip_area_entered(area):
 	if area.is_in_group(\"Enemy\"):
-		take_damage(area.damage)
-		area.take_damage(9999)
+		area.take_damage(10)
+		take_damage()
 	pass # replace with function body
 
 func change_can_shoot():
@@ -112,14 +103,14 @@ func change_can_shoot():
 	pass"
 _sections_unfolded = [ "Resource" ]
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 
 resource_name = "Dead"
 length = 1.0
 loop = false
 step = 0.1
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 
 resource_name = "Hit"
 length = 0.5
@@ -152,7 +143,7 @@ tracks/1/keys = {
 } ]
 }
 
-[node name="SpaceShip" type="Area2D"]
+[node name="SpaceShip" type="Area2D" index="0"]
 
 position = Vector2( 323.858, 1045.6 )
 input_pickable = true
@@ -164,7 +155,7 @@ audio_bus_override = false
 audio_bus_name = "Master"
 script = SubResource( 1 )
 _sections_unfolded = [ "Collision", "Transform" ]
-life = 10
+life = 1
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
@@ -210,7 +201,8 @@ position = Vector2( -0.429291, 5.79529 )
 
 editor/display_folded = true
 position = Vector2( 0, -39.0247 )
-fireRate = 1.5
+minFireRate = 2.0
+maxFireRate = 3.0
 
 [node name="ShootController" parent="." index="4" instance=ExtResource( 5 )]
 
@@ -230,8 +222,8 @@ autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/Dead = SubResource( 3 )
-anims/Hit = SubResource( 4 )
+anims/Dead = SubResource( 2 )
+anims/Hit = SubResource( 3 )
 blend_times = [  ]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="7"]
