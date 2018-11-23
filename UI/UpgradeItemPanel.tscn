@@ -35,16 +35,12 @@ script/source = "extends Panel
 var upgradeItem
 var total_price
 
-func _ready():
-	$ProgressBar.value = 1
-	pass
-
 func set_upgrade_info(uItem):
 	upgradeItem = uItem
 	$Imagen.texture = load(upgradeItem[\"texture\"])
 	$ProgressBar.max_value = upgradeItem[\"max_level\"]
-	update_price()
 	$ProgressBar.value = upgradeItem[\"level\"]
+	update_price()
 	pass
 
 func _on_UpgradeButton_button_down():
@@ -70,7 +66,7 @@ use_filter = true
 font_data = ExtResource( 6 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[node name="UpgradeItemPanel" type="Panel"]
+[node name="UpgradeItemPanel" type="Panel" index="0"]
 
 pause_mode = 2
 anchor_left = 0.0

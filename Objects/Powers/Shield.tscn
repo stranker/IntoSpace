@@ -8,17 +8,31 @@
 resource_name = "Shield.gd"
 script/source = "extends Area2D
 
-var life = 3
+var life = 1
 var damage = 10
 var enabled = false
 var rotationAngle = 0
+var id_upgrade = 1
+var level = 0
+onready var upgrade = Global.get_upgrade_by_id(id_upgrade)
 
 func _ready():
-	visible = enabled
+	visible = false
+	level = upgrade[\"level\"]
+	pass
 
 func _process(delta):
 	rotationAngle += delta * 5
 	rotation = rotationAngle
+	check_level_upgrade()
+	pass
+
+func check_level_upgrade():
+	if level != upgrade[\"level\"]:
+		enabled = true
+		visible = enabled
+		level = upgrade[\"level\"]
+		life = level
 	pass
 
 func _on_Shield_area_entered(area):
@@ -27,12 +41,6 @@ func _on_Shield_area_entered(area):
 		take_damage()
 	pass
 
-func create_shield():
-	if !enabled:
-		enabled = true
-		visible = true
-	life = 3
-	pass
 
 func take_damage():
 	life -= 1
@@ -60,6 +68,7 @@ radius = 53.7697
 
 [node name="Shield" type="Area2D"]
 
+pause_mode = 2
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -68,6 +77,7 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 script = SubResource( 1 )
+_sections_unfolded = [ "Pause" ]
 
 [node name="Light2D" type="Light2D" parent="." index="0"]
 
