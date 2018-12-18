@@ -1,0 +1,67 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Objects/Interactables/SpaceStation.tscn" type="PackedScene" id=1]
+
+[sub_resource type="GDScript" id=1]
+
+resource_name = "StationSpawner.gd"
+script/source = "extends Node2D
+
+export (PackedScene) var station
+export (int) var minTime
+export (int) var maxTime
+var spawnTime
+
+func _ready():
+	randomize()
+	new_spawn_time()
+	pass
+
+func new_spawn_time():
+	$Timer.stop()
+	spawnTime = rand_range(minTime,maxTime)
+	$Timer.wait_time = spawnTime
+	$Timer.start()
+	pass
+
+func _on_Timer_timeout():
+	spawn_station()
+	new_spawn_time()
+	pass # replace with function body
+
+func spawn_station():
+	var s = station.instance()
+	get_tree().root.call_deferred(\"add_child\",s)
+	s.global_position = $PosR.global_position
+	if rand_range(0,1) > 0.5:
+		s.global_position = $PosL.global_position
+	pass"
+_sections_unfolded = [ "Resource" ]
+
+[node name="StationSpawner" type="Node2D"]
+
+script = SubResource( 1 )
+station = ExtResource( 1 )
+minTime = 20
+maxTime = 30
+
+[node name="Timer" type="Timer" parent="." index="0"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = true
+autostart = false
+
+[node name="PosR" type="Position2D" parent="." index="1"]
+
+position = Vector2( 720, -100 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="PosL" type="Position2D" parent="." index="2"]
+
+position = Vector2( 0, -100 )
+_sections_unfolded = [ "Transform" ]
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+
+

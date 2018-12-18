@@ -10,10 +10,10 @@ script/source = "extends Area2D
 var speed = 100
 var velocity = Vector2()
 
-
 func _ready():
 	velocity.y = speed
 	set_flip()
+	Global.set_active_spawns(false)
 	pass
 
 func set_flip():
@@ -33,11 +33,6 @@ func _on_SpaceStation_area_entered(area):
 	if area.is_in_group(\"Player\"):
 		get_tree().paused = true
 		Global.upgradePanel.set_active(true)
-	pass # replace with function body
-
-
-func _on_VisibilityNotifier2D_screen_entered():
-	Global.set_active_spawns(false)
 	pass # replace with function body
 
 
@@ -81,8 +76,6 @@ shape = SubResource( 2 )
 rect = Rect2( -10, -10, 20, 20 )
 
 [connection signal="area_entered" from="." to="." method="_on_SpaceStation_area_entered"]
-
-[connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
 
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 

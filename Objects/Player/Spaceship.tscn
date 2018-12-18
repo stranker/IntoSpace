@@ -18,6 +18,10 @@ var moving = false
 var sizeSprite
 var dragging = false
 var alive = true
+var bulletDamage = 1
+var id_upgrade = 2
+onready var upgrade = Global.get_upgrade_by_id(id_upgrade)
+var upgradeLevel = 1
 
 func _ready():
 	initialize()
@@ -28,11 +32,21 @@ func initialize():
 	sizeSprite = $Sprite.texture.get_size() * $Sprite.scale
 	add_to_group(\"Player\")
 	alive = true
+	set_damage_shoot_controller(bulletDamage)
+	check_update_upgrade_level()
+	pass
+
+func check_update_upgrade_level():
+	if upgradeLevel != upgrade[\"level\"]:
+		upgradeLevel = upgrade[\"level\"]
+		bulletDamage += upgradeLevel
+		set_damage_shoot_controller(bulletDamage)
 	pass
 
 func _process(delta):
 	movement(delta)
 	clamp_position()
+	check_update_upgrade_level()
 	if !dragging:
 		offsetPos = Vector2()
 	pass
@@ -51,6 +65,8 @@ func movement(delta):
 	position += offsetPos
 	pass
 
+func set_damage_shoot_controller(val):
+	$ShootController.set_bullet_damage(val)
 
 func clamp_position():
 	position.x = clamp(position.x, sizeSprite.x/2 ,  get_viewport_rect().size.x - sizeSprite.x/2)
@@ -88,8 +104,8 @@ func take_damage():
 	if alive:
 		alive = false
 		$Anim.play(\"Dead\")
-		Global.player = null
-		get_tree().change_scene(\"res://Scenes/DeadScene.tscn\")
+		hide()
+		$DeathTimer.start()
 	pass
 
 func _on_SpaceShip_area_entered(area):
@@ -100,7 +116,12 @@ func _on_SpaceShip_area_entered(area):
 
 func change_can_shoot():
 	$ShootController.set_active(!$ShootController.enabled)
-	pass"
+	pass
+
+func _on_DeathTimer_timeout():
+	get_tree().change_scene(\"res://Scenes/DeadScene.tscn\")
+	pass # replace with function body
+"
 _sections_unfolded = [ "Resource" ]
 
 [sub_resource type="Animation" id=2]
@@ -231,7 +252,16 @@ blend_times = [  ]
 build_mode = 0
 polygon = PoolVector2Array( -23.9305, 45.5161, 25.8799, 45.7833, 31.2554, 16.0253, 9.94022, -37.9928, -9.03909, -38.2848, -30.9383, 15.7333 )
 
+[node name="DeathTimer" type="Timer" parent="." index="8"]
+
+process_mode = 1
+wait_time = 3.0
+one_shot = true
+autostart = false
+
 [connection signal="area_entered" from="." to="." method="_on_SpaceShip_area_entered"]
+
+[connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]
 
 
 [editable path="HomingShooter"]

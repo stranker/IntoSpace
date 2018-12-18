@@ -12,6 +12,7 @@ var enabled = true
 var id_upgrade = 3
 onready var upgrade = Global.get_upgrade_by_id(id_upgrade)
 var level = 1
+var damage = 1
 
 func _ready():
 	initialize_turrets()
@@ -70,6 +71,11 @@ func set_firerate(val):
 			i.set_firerate(firerate)
 			i.reset_timer()
 	pass
+
+func set_bullet_damage(val):
+	for i in get_children():
+		if i.name.find(\"Turret\") >= 0:
+			i.set_damage(val)
 
 func _on_Timer_timeout():
 	firerate = 0.6

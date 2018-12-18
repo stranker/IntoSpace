@@ -57,7 +57,7 @@ func _on_DetectionArea_area_entered(area):
 func seek_enemy():
 	var steer = Vector2()
 	var desired = Vector2()
-	if enemyTarget and enemyTarget.alive:
+	if enemyTarget:
 		desired = (enemyTarget.global_position - global_position).normalized() * speed
 		steer = (desired - velocity).normalized() * steerForce
 	return steer
@@ -91,7 +91,7 @@ _sections_unfolded = [ "Resource" ]
 custom_solver_bias = 0.0
 extents = Vector2( 24.3899, 15.2511 )
 
-[node name="HomingMissile" type="Area2D"]
+[node name="HomingMissile" type="Area2D" index="0"]
 
 position = Vector2( 0.183792, 2.80744 )
 input_pickable = true
@@ -136,6 +136,13 @@ polygon = PoolVector2Array( -2.06721, -3.5508, 181.67, -507.386, 711.831, 7.5595
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="." index="3"]
 
 rect = Rect2( -10, -10, 20, 20 )
+
+[node name="DeathTimer" type="Timer" parent="." index="4"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
 
 [connection signal="area_entered" from="." to="." method="_on_HoverMissile_area_entered"]
 

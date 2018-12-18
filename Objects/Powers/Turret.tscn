@@ -14,9 +14,6 @@ onready var damage = 1
 onready var firerate = get_parent().get_firerate()
 var enabled = false
 var direction = Vector2()
-var id_upgrade = 2
-onready var upgrade = Global.get_upgrade_by_id(id_upgrade)
-var level = 1
 
 
 func set_damage(val):
@@ -28,11 +25,6 @@ func set_firerate(val):
 
 func _process(delta):
 	if enabled:
-		if !fromEnemy:
-			if level != upgrade[\"level\"]:
-				level = upgrade[\"level\"]
-				damage = level * 2
-		set_direction()
 		if firerate != get_parent().get_firerate() and !$FireRate.is_stopped():
 			firerate = get_parent().get_firerate()
 			$FireRate.wait_time = firerate
@@ -48,12 +40,13 @@ func shoot():
 		var b = bullet.instance()
 		get_tree().root.add_child(b)
 		b.global_position = global_position
+		get_direction()
 		b.shoot(damage,direction,fromEnemy)
 		canShoot = false
 		$FireRate.start()
 	pass
 
-func set_direction():
+func get_direction():
 	if !fromEnemy:
 		direction = (global_position - get_parent().global_position).normalized()
 	else:
