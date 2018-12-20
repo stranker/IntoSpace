@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Sprites/Background/BG_6.jpg" type="Texture" id=1]
 [ext_resource path="res://Sprites/Background/Stars_1.png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Objects/Misc/Camara.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Objects/Misc/Spawners.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Objects/Misc/StationSpawner.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/DeadScene.tscn" type="PackedScene" id=10]
 
 [sub_resource type="GDScript" id=1]
 
@@ -64,7 +65,18 @@ func _on_Shoot_button_down():
 func _on_MagnetCoin_button_down():
 	Global.player.increment_magnet()
 	pass # replace with function body
-"
+
+
+func _on_SpaceShip_deathSignal():
+	$DeadScene.show()
+	destroy_objects()
+	pass # replace with function body
+
+func destroy_objects():
+	$Spawners.queue_free()
+	$Enemies.queue_free()
+	$Coins.queue_free()
+	$StationSpawner.queue_free()"
 _sections_unfolded = [ "Resource" ]
 
 [node name="GameScene" type="Node2D"]
@@ -349,6 +361,14 @@ position = Vector2( 361.123, 636.903 )
 
 [node name="Enemies" type="Node2D" parent="." index="8"]
 
+[node name="DeadScene" parent="." index="9" instance=ExtResource( 10 )]
+
+visible = false
+margin_left = -9.0
+margin_top = -19.0
+margin_right = 663.0
+margin_bottom = 1225.0
+
 [connection signal="button_down" from="UIPanel/DebugPanel" to="." method="_on_DebugPanel_button_down"]
 
 [connection signal="button_down" from="UIPanel/DebugPanel/Panel/Shoot" to="." method="_on_Shoot_button_down"]
@@ -362,6 +382,8 @@ position = Vector2( 361.123, 636.903 )
 [connection signal="button_down" from="UIPanel/DebugPanel/Panel/Laser" to="." method="_on_Laser_button_down"]
 
 [connection signal="button_down" from="UIPanel/DebugPanel/Panel/MagnetCoin" to="." method="_on_MagnetCoin_button_down"]
+
+[connection signal="deathSignal" from="SpaceShip" to="." method="_on_SpaceShip_deathSignal"]
 
 
 [editable path="UIPanel"]

@@ -13,9 +13,6 @@ func _ready():
 	pass
 
 func _process(delta):
-	if !Global.player.alive and !shaking:
-		Global.player = null
-		shake(10,2)
 	if shaking:
 		offset.x = rand_range(-shakeAmount,shakeAmount)
 		offset.y = rand_range(-shakeAmount,shakeAmount)
@@ -62,7 +59,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 2, 3 ), Vector2( -5, 5 ), Vector2( 10, -10 ), Vector2( 3, 1 ) ]
 }
 
-[node name="Camara" type="Camera2D" index="0"]
+[node name="Camara" type="Camera2D"]
 
 position = Vector2( -2.40921, 0.722412 )
 anchor_mode = 1

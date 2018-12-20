@@ -18,6 +18,10 @@ func _on_Back_button_down():
 	get_tree().change_scene(\"res://Scenes/MainMenu.tscn\")
 	Global.new_game()
 	pass # replace with function body
+
+func _on_VisibilityNotifier2D_draw():
+	_ready()
+	pass # replace with function body
 "
 _sections_unfolded = [ "Resource" ]
 
@@ -37,7 +41,7 @@ use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
 
-[node name="DeadScene" type="Control"]
+[node name="DeadScene" type="Control" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -166,6 +170,12 @@ group = null
 texture_normal = ExtResource( 3 )
 _sections_unfolded = [ "Textures" ]
 
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="." index="1"]
+
+rect = Rect2( -10, -10, 20, 20 )
+
 [connection signal="button_down" from="Background/Back" to="." method="_on_Back_button_down"]
+
+[connection signal="draw" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_draw"]
 
 
