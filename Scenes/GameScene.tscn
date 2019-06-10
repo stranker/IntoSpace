@@ -12,7 +12,6 @@
 [ext_resource path="res://Scenes/DeadScene.tscn" type="PackedScene" id=10]
 
 [sub_resource type="GDScript" id=1]
-
 resource_name = "GameScene.gd"
 script/source = "extends Node2D
 
@@ -77,292 +76,118 @@ func destroy_objects():
 	$Enemies.queue_free()
 	$Coins.queue_free()
 	$StationSpawner.queue_free()"
-_sections_unfolded = [ "Resource" ]
 
 [node name="GameScene" type="Node2D"]
-
 script = SubResource( 1 )
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="." index="0"]
-
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 editor/display_folded = true
-layer = -1
-offset = Vector2( 0, 0 )
-rotation = 0.0
-scale = Vector2( 1, 1 )
-transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-scroll_offset = Vector2( 0, 0 )
-scroll_base_offset = Vector2( 0, 0 )
-scroll_base_scale = Vector2( 1, 1 )
-scroll_limit_begin = Vector2( 0, 0 )
-scroll_limit_end = Vector2( 0, 0 )
 scroll_ignore_camera_zoom = true
-_sections_unfolded = [ "Scroll" ]
 
-[node name="TextureRect" type="TextureRect" parent="ParallaxBackground" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 37.0
 margin_bottom = 29.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 1 )
 expand = true
 stretch_mode = 6
 
-[node name="Background" type="ParallaxLayer" parent="ParallaxBackground" index="1"]
-
+[node name="Background" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2( 0.1, 0.1 )
-motion_offset = Vector2( 0, 0 )
 motion_mirroring = Vector2( 720, 1280 )
-_sections_unfolded = [ "Motion", "Transform" ]
 
-[node name="Sprite" type="Sprite" parent="ParallaxBackground/Background" index="0"]
-
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/Background"]
 position = Vector2( 356.975, 641.586 )
 texture = ExtResource( 2 )
-_sections_unfolded = [ "Offset" ]
 
-[node name="Background2" type="ParallaxLayer" parent="ParallaxBackground" index="2"]
-
+[node name="Background2" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2( 0.05, 0.05 )
 motion_offset = Vector2( 150, 210 )
 motion_mirroring = Vector2( 720, 1280 )
-_sections_unfolded = [ "Motion", "Transform" ]
 
-[node name="Sprite" type="Sprite" parent="ParallaxBackground/Background2" index="0"]
-
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/Background2"]
 position = Vector2( 356.975, 641.586 )
 texture = ExtResource( 3 )
-_sections_unfolded = [ "Offset" ]
 
-[node name="UIPanel" parent="." index="1" instance=ExtResource( 4 )]
-
+[node name="UIPanel" parent="." instance=ExtResource( 4 )]
 editor/display_folded = true
 
 [node name="Panel" parent="UIPanel" index="0"]
-
 editor/display_folded = true
 
-[node name="DebugPanel" type="Button" parent="UIPanel" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="DebugPanel" type="Button" parent="UIPanel"]
 margin_left = 1.0
 margin_top = 4.0
 margin_right = 110.0
 margin_bottom = 76.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "DEBUG PANEL"
-flat = false
-align = 1
 
-[node name="Panel" type="Panel" parent="UIPanel/DebugPanel" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Panel" type="Panel" parent="UIPanel/DebugPanel"]
 margin_left = 2.0
 margin_top = 70.0
 margin_right = 190.0
 margin_bottom = 599.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 
-[node name="Shoot" type="Button" parent="UIPanel/DebugPanel/Panel" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Shoot" type="Button" parent="UIPanel/DebugPanel/Panel"]
 margin_left = 3.0
 margin_top = 4.0
 margin_right = 171.0
 margin_bottom = 71.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "ON/OFF SHOOTS"
-flat = false
-align = 1
 
-[node name="Shoots" type="Button" parent="UIPanel/DebugPanel/Panel" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Shoots" type="Button" parent="UIPanel/DebugPanel/Panel"]
 margin_left = 4.0
 margin_top = 147.0
 margin_right = 172.0
 margin_bottom = 214.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "ADD SHOOTS"
-flat = false
-align = 1
 
-[node name="Shield" type="Button" parent="UIPanel/DebugPanel/Panel" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Shield" type="Button" parent="UIPanel/DebugPanel/Panel"]
 margin_left = 5.0
 margin_top = 219.0
 margin_right = 173.0
 margin_bottom = 286.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "ADD SHIELD"
-flat = false
-align = 1
 
-[node name="Homing" type="Button" parent="UIPanel/DebugPanel/Panel" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Homing" type="Button" parent="UIPanel/DebugPanel/Panel"]
 margin_left = 6.0
 margin_top = 294.0
 margin_right = 185.0
 margin_bottom = 361.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "ON/OFF HOMING MISSILE"
-flat = false
-align = 1
 
-[node name="Laser" type="Button" parent="UIPanel/DebugPanel/Panel" index="4"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Laser" type="Button" parent="UIPanel/DebugPanel/Panel"]
 margin_left = 8.0
 margin_top = 373.0
 margin_right = 176.0
 margin_bottom = 440.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "ADD LASER"
-flat = false
-align = 1
 
-[node name="MagnetCoin" type="Button" parent="UIPanel/DebugPanel/Panel" index="5"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="MagnetCoin" type="Button" parent="UIPanel/DebugPanel/Panel"]
 margin_left = 5.0
 margin_top = 448.0
 margin_right = 173.0
 margin_bottom = 515.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "INC MAGNET COIN"
-flat = false
-align = 1
 
-[node name="UpgradePanel" parent="." index="2" instance=ExtResource( 5 )]
+[node name="UpgradePanel" parent="." instance=ExtResource( 5 )]
 
-[node name="SpaceShip" parent="." index="3" instance=ExtResource( 6 )]
-
+[node name="SpaceShip" parent="." instance=ExtResource( 6 )]
 position = Vector2( 334.39, 1051.15 )
 
-[node name="Camara" parent="." index="4" instance=ExtResource( 7 )]
-
+[node name="Camara" parent="." instance=ExtResource( 7 )]
 position = Vector2( 361.123, 636.903 )
 
-[node name="Spawners" parent="." index="5" instance=ExtResource( 8 )]
+[node name="Spawners" parent="." instance=ExtResource( 8 )]
 
-[node name="StationSpawner" parent="." index="6" instance=ExtResource( 9 )]
+[node name="StationSpawner" parent="." instance=ExtResource( 9 )]
 
-[node name="Coins" type="Node2D" parent="." index="7"]
+[node name="Coins" type="Node2D" parent="."]
 
-[node name="Enemies" type="Node2D" parent="." index="8"]
+[node name="Enemies" type="Node2D" parent="."]
 
-[node name="DeadScene" parent="." index="9" instance=ExtResource( 10 )]
-
+[node name="DeadScene" parent="." instance=ExtResource( 10 )]
 visible = false
 margin_left = -9.0
 margin_top = -19.0
@@ -370,20 +195,12 @@ margin_right = 663.0
 margin_bottom = 1225.0
 
 [connection signal="button_down" from="UIPanel/DebugPanel" to="." method="_on_DebugPanel_button_down"]
-
 [connection signal="button_down" from="UIPanel/DebugPanel/Panel/Shoot" to="." method="_on_Shoot_button_down"]
-
 [connection signal="button_down" from="UIPanel/DebugPanel/Panel/Shoots" to="." method="_on_Shoots_button_down"]
-
 [connection signal="button_down" from="UIPanel/DebugPanel/Panel/Shield" to="." method="_on_Shield_button_down"]
-
 [connection signal="button_down" from="UIPanel/DebugPanel/Panel/Homing" to="." method="_on_Hover_button_down"]
-
 [connection signal="button_down" from="UIPanel/DebugPanel/Panel/Laser" to="." method="_on_Laser_button_down"]
-
 [connection signal="button_down" from="UIPanel/DebugPanel/Panel/MagnetCoin" to="." method="_on_MagnetCoin_button_down"]
-
 [connection signal="deathSignal" from="SpaceShip" to="." method="_on_SpaceShip_deathSignal"]
-
 
 [editable path="UIPanel"]

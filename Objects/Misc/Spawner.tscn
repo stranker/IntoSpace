@@ -1,7 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
 [sub_resource type="GDScript" id=1]
-
 resource_name = "Spawner.gd"
 script/source = "extends Position2D
 
@@ -41,23 +40,12 @@ func _on_Timer_timeout():
 	new_time()
 	pass # replace with function body
 "
-_sections_unfolded = [ "Resource" ]
 
 [node name="Spawner" type="Position2D"]
-
 script = SubResource( 1 )
-object = null
-objectList = [  ]
-minTime = null
-maxTime = null
 
-[node name="Timer" type="Timer" parent="." index="0"]
-
-process_mode = 1
+[node name="Timer" type="Timer" parent="."]
 wait_time = 2.0
-one_shot = false
 autostart = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
-
-
