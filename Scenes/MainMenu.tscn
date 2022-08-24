@@ -69,9 +69,6 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.320431 ) ]
 }
 
-<<<<<<< Updated upstream
-[node name="MainMenu" type="Control"]
-=======
 [node name="MainMenu" type="Control" index="0"]
 
 anchor_left = 0.0
